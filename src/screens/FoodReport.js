@@ -2,12 +2,8 @@ import React from "react";
 import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList,Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
 import DailyReportItems from "./DailyReportList/Components/DailyReportItems";
 var srcBg = require("../images/background.png");
-var srcLeft = require("../images/icon/dailyreportleftarrow.png");
-var srcRight = require("../images/icon/dailyreportrightarrow.png");
 var srcAvatar = require("../images/studentexample.png");
 var srcFAB = require("../images/icon/fabdailyreporticon.png");
 var srcFood = require("../images/icon/foodicon.png");
@@ -19,8 +15,10 @@ var srcIncident = require("../images/icon/incidenticon.png");
 var srcMilk = require("../images/icon/milkicon.png");
 var srcNap = require("../images/icon/napicon.png");
 var srcOther = require("../images/icon/drothericon.png");
+var srcBorder = require("../images/borderfoodimage.png");
+var srcFood = require("../images/examplefood.png");
 
-class DailyReport extends React.Component {
+class FoodReport extends React.Component {
 
   static navigationOptions = () => ({
     title: "Daily Report",
@@ -81,10 +79,6 @@ class DailyReport extends React.Component {
     this.setState({popupMenu: visible});
   }
 
-  _navigateFood() {
-    
-  }
-
   _renderItem = ({item}) => <DailyReportItems item={item} navigation={this.props.navigation} />
 
   render() {
@@ -93,19 +87,13 @@ class DailyReport extends React.Component {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <View style={{height:46,backgroundColor:'#8865A9',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                    <Image source={srcLeft} style={{marginLeft:10}} />
-                    <TouchableOpacity
-                        onPress={this._showDateTimePicker}
-                    ><Text style={{fontSize:13,color:'#FFFFFF'}}>Monday, 01 Jan 2018</Text></TouchableOpacity>
-                    <Image source={srcRight} style={{marginRight:10}} />
-                </View>
                 <ImageBackground style={styles.imageBackground} source={srcBg}>
-                    <View style={{alignItems:'center',flexDirection:'row',marginTop:20}}>
-                        <View style={{width:61,height:61,borderRadius:30,borderColor:'#707070',borderWidth:1,marginLeft:20,alignItems:'center'}}>
-                            <Image source={srcAvatar} style={{width:60,height:60}} />
-                        </View>
-                        <Text style={{fontSize:17,color:'#B08485',marginLeft:15}}>Lily Josh</Text>
+                    <View style={{alignItems:'center',justifyContent:'center',marginTop:20}}>
+                        <ImageBackground source={srcBorder} style={{width:166,height:162}}>
+                            <View style={{width:166,height:162,borderRadius:80,alignItems:'center',justifyContent:'center'}}>
+                                <Image source={srcFood} style={{width:143,height:142}} />
+                            </View>
+                        </ImageBackground>
                     </View>
                     <View style={{marginTop:20,marginLeft:25}}>
                         <FlatList
@@ -138,8 +126,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Food</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("FoodReport"); }}>
+                                    <TouchableOpacity>
                                     <Image source={srcFood} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -251,4 +238,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DailyReport;
+export default FoodReport;

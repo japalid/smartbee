@@ -14,6 +14,8 @@ import LessonsResultDetail from "./screens/LessonsResultDetail";
 import LessonsMilestoneDetail from "./screens/LessonsMilestoneList/LessonsMilestoneDetail";
 import Students from "./screens/Students";
 import DailyReport from "./screens/DailyReport";
+import FoodReport from "./screens/FoodReport";
+import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -79,6 +81,18 @@ export const SignedIn = createStackNavigator(
       screen: DailyReport,
       navigationOptions: {
         title: "Daily Report"
+      }
+    },
+    FoodReport: {
+      screen: FoodReport,
+      navigationOptions: {
+        title: "Food"
+      }
+    },
+    ImageZoom: {
+      screen: ImageZoom,
+      navigationOptions: {
+        title: "Image"
       }
     },
   },

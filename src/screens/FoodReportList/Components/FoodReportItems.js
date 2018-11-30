@@ -8,7 +8,7 @@ const propTypes = {
     item: PropTypes.object
 }
 
-class DailyReportItems extends React.Component {
+class FoodReportItems extends React.Component {
 
     constructor(props) {
         super(props)
@@ -21,9 +21,7 @@ class DailyReportItems extends React.Component {
                     <Image source={srcIconFood} style={{width:19,height:19}} />
                     <View style={{marginLeft:25}}>
                         <Text style={{color:'#3D4356',fontSize:15,marginBottom:10}}>{this.props.item.title}</Text>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("ImageZoom")}>
-                            <Image source={srcExample} style={{borderRadius:10,width:151,height:151,marginBottom:20}}/>
-                        </TouchableOpacity>
+                        <Image source={srcExample} style={{borderRadius:10,width:151,height:151,marginBottom:20}}/>
                         <Text style={{color:"#3D4356",fontSize:15,marginBottom:10}}>{this.props.item.description}</Text>
                         <Text style={{color:'#3D4356',fontSize:11}}>{this.props.item.date}</Text>
                     </View>
@@ -33,7 +31,7 @@ class DailyReportItems extends React.Component {
     }
 }
 
-DailyReportItems.propTypes = propTypes;
+FoodReportItems.propTypes = propTypes;
 
 const styles = StyleSheet.create({
     container: {
@@ -42,4 +40,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DailyReportItems;
+export default FoodReportItems;
