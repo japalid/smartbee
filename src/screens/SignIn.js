@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, Platform } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { onSignIn } from "../auth";
@@ -26,7 +26,7 @@ class SignIn extends React.Component {
   render() {
     return (
       <ScrollView>
-        <ImageBackground source={srcImage} style={styles.imageBackground}>
+        <ImageBackground source={srcImage} style={styles.imageBackground} imageStyle={{resizeMode:'cover'}}>
         
                 <View style={styles.container}>
 
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   viewLogo: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: (Platform.OS) == 'ios' ? 40 : 0
   },
   imageLogo: {
     width: 77,

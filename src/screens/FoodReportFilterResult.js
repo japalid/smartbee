@@ -18,7 +18,7 @@ var srcOther = require("../images/icon/drothericon.png");
 var srcBorder = require("../images/borderfoodimage.png");
 var srcFood = require("../images/examplefood.png");
 
-class FoodReport extends React.Component {
+class FoodReportFilterResult extends React.Component {
 
   static navigationOptions = () => ({
     title: "Food",
@@ -98,11 +98,21 @@ class FoodReport extends React.Component {
                     <View
                     style={{marginTop:20,justifyContent:'center',alignItems:'center',flexDirection:'row'}}
                     >
-                        <Text>Date : </Text>
+                        <Text>From : </Text>
                         <TouchableOpacity
-                            onPress={()=>this.props.navigation.navigate('FoodReportFilterDate')}
+                            onPress={()=>this.props.navigation.navigate('FoodReportFilterResultFilterDate')}
                         >
                             <Text style={{color:'#B08485'}}>Monday,01 Jan 2018</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View
+                    style={{marginTop:10,justifyContent:'center',alignItems:'center',flexDirection:'row'}}
+                    >
+                        <Text>To : </Text>
+                        <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate('FoodReportFilterResultFilterDate')}
+                        >
+                            <Text style={{color:'#B08485'}}>Monday,08 Jan 2018</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{marginTop:20,marginLeft:25}}>
@@ -113,14 +123,32 @@ class FoodReport extends React.Component {
                             keyExtractor={(item, index) => item.id+""}
                         />    
                     </View>
+
+                    <View style={{justifyContent:'center',alignItems:'center',marginTop:15}}>
+                        <TouchableOpacity
+                            style={{borderRadius:15,paddingTop:10,paddingBottom:10,paddingLeft:15,paddingRight:15,borderColor:'#E2DEDF',borderWidth:2}}
+                        >
+                            <Text style={{color:'#0081D4',fontSize:14}}>Load More</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{justifyContent:'center',alignItems:'center',borderRadius:10,flexDirection:'column',marginTop:20,alignSelf:'stretch',marginLeft:15,marginRight:15,shadowColor:'#000',shadowOffset:{width:1, height:1}, shadowRadius:2,elevation:1,backgroundColor:'#FFFFFF',shadowOpacity:0.5}}>
+                        <View style={{backgroundColor:'#ACD6CA',borderTopLeftRadius:10,borderTopRightRadius:10,padding:10,justifyContent:'center',alignSelf:'stretch'}}>
+                            <Text style={{color:'#FFFFFF',fontSize:20,marginLeft:5}}>Result</Text>
+                        </View>
+                        <Text style={{fontSize:15,color:'#3D4356',marginTop:5,marginLeft:5,marginBottom:5,padding:10,justifyContent:'center'}}>60% anak anda makan cukup untuk sarapan</Text>
+                    </View>
+
+                    <View style={{justifyContent:'center',alignItems:'center',borderRadius:10,flexDirection:'column',marginTop:20,alignSelf:'stretch',marginLeft:15,marginRight:15,shadowColor:'#000',shadowOffset:{width:1, height:1}, shadowRadius:2,elevation:1,backgroundColor:'#FFFFFF',shadowOpacity:0.5}}>
+                        <View style={{backgroundColor:'#CAD5DB',borderTopLeftRadius:10,borderTopRightRadius:10,padding:10,justifyContent:'center',alignSelf:'stretch'}}>
+                            <Text style={{color:'#FFFFFF',fontSize:20,marginLeft:5}}>Tips</Text>
+                        </View>
+                        <Text style={{fontSize:15,color:'#3D4356',marginTop:5,marginLeft:5,marginBottom:5,padding:10,justifyContent:'center'}}>Sajikan makanan anak anda dengan porsi sedang namun sering</Text>
+                    </View>
+
                     <View style={{height:80}}></View>
                 </ImageBackground>
-                <DateTimePicker
-                    date={new Date()}
-                    isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm={this._handleDatePicked}
-                    onCancel={this._hideDateTimePicker}
-                />
+                
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -248,4 +276,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FoodReport;
+export default FoodReportFilterResult;

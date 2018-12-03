@@ -15,6 +15,8 @@ import LessonsMilestoneDetail from "./screens/LessonsMilestoneList/LessonsMilest
 import Students from "./screens/Students";
 import DailyReport from "./screens/DailyReport";
 import FoodReport from "./screens/FoodReport";
+import FoodReportFilterDate from "./screens/FoodReportFilterDate";
+import FoodReportFilterResult from "./screens/FoodReportFilterResult";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -85,6 +87,18 @@ export const SignedIn = createStackNavigator(
     },
     FoodReport: {
       screen: FoodReport,
+      navigationOptions: {
+        title: "Food"
+      }
+    },
+    FoodReportFilterDate: {
+      screen: FoodReportFilterDate,
+      navigationOptions: {
+        title: "Food"
+      }
+    },
+    FoodReportFilterResult: {
+      screen: FoodReportFilterResult,
       navigationOptions: {
         title: "Food"
       }

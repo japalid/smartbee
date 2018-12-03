@@ -47,6 +47,7 @@ class SignUp extends React.Component {
                   </View>
 
                   <Button
+                  style={{marginTop:10}}
                     title="Continue"
                     buttonStyle={styles.btnDefault}
                     titleStyle={styles.textButton}
