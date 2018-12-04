@@ -25,6 +25,14 @@ import MedicalReportFilterDate from "./screens/MedicalReportFilterDate";
 import MedicalReportFilterResultBerat from "./screens/MedicalReportFilterResultBerat";
 import MedicalReportFilterResultTinggi from "./screens/MedicalReportFilterResultTinggi";
 import MedicalReportFilterResultSuhu from "./screens/MedicalReportFilterResultSuhu";
+import AcademicReportGraph from "./screens/AcademicReportGraph";
+import AcademicReportGrade from "./screens/AcademicReportGrade";
+import AcademicReportFilterDate from "./screens/AcademicReportFilterDate";
+import AcademicReportFilterResultGraph from "./screens/AcademicReportFilterResultGraph";
+import AcademicReportFilterResultGrade from "./screens/AcademicReportFilterResultGrade";
+import PottyReport from "./screens/PottyReport";
+import PottyReportFilterDate from "./screens/PottyReportFilterDate";
+import PottyReportFilterResult from "./screens/PottyReportFilterResult";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -157,6 +165,54 @@ export const SignedIn = createStackNavigator(
       screen: MedicalReportFilterResultSuhu,
       navigationOptions: {
         title: "Medical"
+      }
+    },
+    AcademicReportGraph: {
+      screen: AcademicReportGraph,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    AcademicReportGrade: {
+      screen: AcademicReportGrade,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    AcademicReportFilterDate: {
+      screen: AcademicReportFilterDate,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    AcademicReportFilterResultGraph: {
+      screen: AcademicReportFilterResultGraph,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    AcademicReportFilterResultGrade: {
+      screen: AcademicReportFilterResultGrade,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    PottyReport: {
+      screen: PottyReport,
+      navigationOptions: {
+        title: "Potty"
+      }
+    },
+    PottyReportFilterDate: {
+      screen: PottyReportFilterDate,
+      navigationOptions: {
+        title: "Potty"
+      }
+    },
+    PottyReportFilterResult: {
+      screen: PottyReportFilterResult,
+      navigationOptions: {
+        title: "Potty"
       }
     },
     ImageZoom: {
