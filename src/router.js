@@ -42,6 +42,9 @@ import MilkReportFilterResult from "./screens/MilkReportFilterResult";
 import NapReport from "./screens/NapReport";
 import NapReportFilterDate from "./screens/NapReportFilterDate";
 import NapReportFilterResult from "./screens/NapReportFilterResult";
+import OtherReport from "./screens/OtherReport";
+import OtherReportFilterDate from "./screens/OtherReportFilterDate";
+import OtherReportFilterResult from "./screens/OtherReportFilterResult";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -276,6 +279,24 @@ export const SignedIn = createStackNavigator(
       screen: NapReportFilterResult,
       navigationOptions: {
         title: "Nap"
+      }
+    },
+    OtherReport: {
+      screen: OtherReport,
+      navigationOptions: {
+        title: "Other"
+      }
+    },
+    OtherReportFilterDate: {
+      screen: OtherReportFilterDate,
+      navigationOptions: {
+        title: "Other"
+      }
+    },
+    OtherReportFilterResult: {
+      screen: OtherReportFilterResult,
+      navigationOptions: {
+        title: "Other"
       }
     },
     ImageZoom: {
