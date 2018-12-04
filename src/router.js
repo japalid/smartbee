@@ -36,6 +36,9 @@ import PottyReportFilterResult from "./screens/PottyReportFilterResult";
 import IncidentReport from "./screens/IncidentReport";
 import IncidentReportFilterDate from "./screens/IncidentReportFilterDate";
 import IncidentReportFilterResult from "./screens/IncidentReportFilterResult";
+import MilkReport from "./screens/MilkReport";
+import MilkReportFilterDate from "./screens/MilkReportFilterDate";
+import MilkReportFilterResult from "./screens/MilkReportFilterResult";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -234,6 +237,24 @@ export const SignedIn = createStackNavigator(
       screen: IncidentReportFilterResult,
       navigationOptions: {
         title: "Incident"
+      }
+    },
+    MilkReport: {
+      screen: MilkReport,
+      navigationOptions: {
+        title: "Milk"
+      }
+    },
+    MilkReportFilterDate: {
+      screen: MilkReportFilterDate,
+      navigationOptions: {
+        title: "Milk"
+      }
+    },
+    MilkReportFilterResult: {
+      screen: MilkReportFilterResult,
+      navigationOptions: {
+        title: "Milk"
       }
     },
     ImageZoom: {
