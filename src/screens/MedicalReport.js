@@ -2,13 +2,8 @@ import React from "react";
 import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList,Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
-import DailyReportItems from "./DailyReportList/Components/DailyReportItems";
+import MedicalReportItems from "./MedicalReportList/Components/MedicalReportItems";
 var srcBg = require("../images/background.png");
-var srcLeft = require("../images/icon/dailyreportleftarrow.png");
-var srcRight = require("../images/icon/dailyreportrightarrow.png");
-var srcAvatar = require("../images/studentexample.png");
 var srcFAB = require("../images/icon/fabdailyreporticon.png");
 var srcFood = require("../images/icon/foodicon.png");
 var srcActivity = require("../images/icon/activityicon.png");
@@ -19,11 +14,13 @@ var srcIncident = require("../images/icon/incidenticon.png");
 var srcMilk = require("../images/icon/milkicon.png");
 var srcNap = require("../images/icon/napicon.png");
 var srcOther = require("../images/icon/drothericon.png");
+var srcBorder = require("../images/borderactivityimage.png");
+var srcExample = require("../images/exampleactivityimage.png");
 
-class DailyReport extends React.Component {
+class MedicalReport extends React.Component {
 
   static navigationOptions = () => ({
-    title: "Daily Report",
+    title: "Medical",
     headerTintColor: '#FFFFFF',
     headerTitleStyle:{ color: '#FFFFFF',alignSelf: 'center'},
     headerStyle: {
@@ -81,11 +78,7 @@ class DailyReport extends React.Component {
     this.setState({popupMenu: visible});
   }
 
-  _navigateFood() {
-    
-  }
-
-  _renderItem = ({item}) => <DailyReportItems item={item} navigation={this.props.navigation} />
+  _renderItem = ({item}) => <MedicalReportItems item={item} navigation={this.props.navigation} />
 
   render() {
     return (
@@ -93,19 +86,16 @@ class DailyReport extends React.Component {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <View style={{height:46,backgroundColor:'#8865A9',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                    <Image source={srcLeft} style={{marginLeft:10}} />
-                    <TouchableOpacity
-                        onPress={this._showDateTimePicker}
-                    ><Text style={{fontSize:13,color:'#FFFFFF'}}>Monday, 01 Jan 2018</Text></TouchableOpacity>
-                    <Image source={srcRight} style={{marginRight:10}} />
-                </View>
                 <ImageBackground style={styles.imageBackground} source={srcBg}>
-                    <View style={{alignItems:'center',flexDirection:'row',marginTop:20}}>
-                        <View style={{width:61,height:61,borderRadius:30,borderColor:'#707070',borderWidth:1,marginLeft:20,alignItems:'center'}}>
-                            <Image source={srcAvatar} style={{width:60,height:60}} />
-                        </View>
-                        <Text style={{fontSize:17,color:'#B08485',marginLeft:15}}>Lily Josh</Text>
+                    <View
+                    style={{marginTop:20,justifyContent:'center',alignItems:'center',flexDirection:'row'}}
+                    >
+                        <Text>Date : </Text>
+                        <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate('MedicalReportFilterDate')}
+                        >
+                            <Text style={{color:'#B08485'}}>Monday,01 Jan 2018</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={{marginTop:20,marginLeft:25}}>
                         <FlatList
@@ -115,6 +105,22 @@ class DailyReport extends React.Component {
                             keyExtractor={(item, index) => item.id+""}
                         />    
                     </View>
+
+                    <View style={{justifyContent:'center',alignItems:'center',marginTop:15}}>
+                        <TouchableOpacity
+                            style={{borderRadius:15,paddingTop:10,paddingBottom:10,paddingLeft:15,paddingRight:15,borderColor:'#E2DEDF',borderWidth:2}}
+                        >
+                            <Text style={{color:'#0081D4',fontSize:14}}>Load More</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{justifyContent:'center',alignItems:'center',borderRadius:10,flexDirection:'column',marginTop:20,alignSelf:'stretch',marginLeft:15,marginRight:15,shadowColor:'#000',shadowOffset:{width:1, height:1}, shadowRadius:2,elevation:1,backgroundColor:'#FFFFFF',shadowOpacity:0.5}}>
+                        <View style={{backgroundColor:'#CAD5DB',borderTopLeftRadius:10,borderTopRightRadius:10,padding:10,justifyContent:'center',alignSelf:'stretch'}}>
+                            <Text style={{color:'#FFFFFF',fontSize:20,marginLeft:5}}>Tips</Text>
+                        </View>
+                        <Text style={{fontSize:15,color:'#3D4356',marginTop:5,marginLeft:5,marginBottom:5,padding:10,justifyContent:'center'}}>Ajarkan anak anda untuk berhati hati saat bermain</Text>
+                    </View>
+                    
                     <View style={{height:80}}></View>
                 </ImageBackground>
                 <DateTimePicker
@@ -138,8 +144,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Food</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("FoodReport"); }}>
+                                    <TouchableOpacity>
                                     <Image source={srcFood} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -147,8 +152,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Activity</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("ActivityReport"); }}>
+                                    <TouchableOpacity>
                                     <Image source={srcActivity} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -156,8 +160,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Medical</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("MedicalReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcMedic} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -165,8 +168,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Academic</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("AcademicReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcAcademic} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -174,8 +176,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Potty</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("PottyReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcPotty} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -183,8 +184,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Incident</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("IncidentReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcIncident} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -192,8 +192,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Milk</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("MilkReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcMilk} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -201,8 +200,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Nap</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("NapReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcNap} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -210,8 +208,7 @@ class DailyReport extends React.Component {
                                     <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Other</Text>
                                     </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("OtherReport"); }}>
+                                    <TouchableOpacity>
                                         <Image source={srcOther} style={{width:39,height:45,marginLeft:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -259,4 +256,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DailyReport;
+export default MedicalReport;

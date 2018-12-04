@@ -15,8 +15,9 @@ var srcIncident = require("../images/icon/incidenticon.png");
 var srcMilk = require("../images/icon/milkicon.png");
 var srcNap = require("../images/icon/napicon.png");
 var srcOther = require("../images/icon/drothericon.png");
+var srcFood = require("../images/icon/foodicon.png");
 var srcBorder = require("../images/borderfoodimage.png");
-var srcFood = require("../images/examplefood.png");
+var srcFoodExample = require("../images/examplefood.png");
 
 class FoodReportFilterResult extends React.Component {
 
@@ -91,7 +92,7 @@ class FoodReportFilterResult extends React.Component {
                     <View style={{alignItems:'center',justifyContent:'center',marginTop:20}}>
                         <ImageBackground source={srcBorder} style={{width:166,height:162}}>
                             <View style={{width:166,height:162,borderRadius:80,alignItems:'center',justifyContent:'center'}}>
-                                <Image source={srcFood} style={{width:143,height:142}} />
+                                <Image source={srcFoodExample} style={{width:143,height:142}} />
                             </View>
                         </ImageBackground>
                     </View>

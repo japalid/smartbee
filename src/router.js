@@ -17,6 +17,14 @@ import DailyReport from "./screens/DailyReport";
 import FoodReport from "./screens/FoodReport";
 import FoodReportFilterDate from "./screens/FoodReportFilterDate";
 import FoodReportFilterResult from "./screens/FoodReportFilterResult";
+import ActivityReport from "./screens/ActivityReport";
+import ActivityReportFilterDate from "./screens/ActivityReportFilterDate";
+import ActivityReportFilterResult from "./screens/ActivityReportFilterResult";
+import MedicalReport from "./screens/MedicalReport";
+import MedicalReportFilterDate from "./screens/MedicalReportFilterDate";
+import MedicalReportFilterResultBerat from "./screens/MedicalReportFilterResultBerat";
+import MedicalReportFilterResultTinggi from "./screens/MedicalReportFilterResultTinggi";
+import MedicalReportFilterResultSuhu from "./screens/MedicalReportFilterResultSuhu";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -101,6 +109,54 @@ export const SignedIn = createStackNavigator(
       screen: FoodReportFilterResult,
       navigationOptions: {
         title: "Food"
+      }
+    },
+    ActivityReport: {
+      screen: ActivityReport,
+      navigationOptions: {
+        title: "Activity"
+      }
+    },
+    ActivityReportFilterDate: {
+      screen: ActivityReportFilterDate,
+      navigationOptions: {
+        title: "Activity"
+      }
+    },
+    ActivityReportFilterResult: {
+      screen: ActivityReportFilterResult,
+      navigationOptions: {
+        title: "Activity"
+      }
+    },
+    MedicalReport: {
+      screen: MedicalReport,
+      navigationOptions: {
+        title: "Medical"
+      }
+    },
+    MedicalReportFilterDate: {
+      screen: MedicalReportFilterDate,
+      navigationOptions: {
+        title: "Medical"
+      }
+    },
+    MedicalReportFilterResultBerat: {
+      screen: MedicalReportFilterResultBerat,
+      navigationOptions: {
+        title: "Medical"
+      }
+    },
+    MedicalReportFilterResultTinggi: {
+      screen: MedicalReportFilterResultTinggi,
+      navigationOptions: {
+        title: "Medical"
+      }
+    },
+    MedicalReportFilterResultSuhu: {
+      screen: MedicalReportFilterResultSuhu,
+      navigationOptions: {
+        title: "Medical"
       }
     },
     ImageZoom: {

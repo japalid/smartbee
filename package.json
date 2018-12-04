@@ -10,6 +10,7 @@
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-action-button": "^2.8.5",
+    "react-native-chart-kit": "^1.2.1",
     "react-native-circular-progress": "^1.0.1",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.0.9",
