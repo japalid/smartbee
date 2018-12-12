@@ -35,7 +35,7 @@ class LessonsMilestone extends React.Component {
             { key: 'grit', title: 'Grit', navigation: this.props.navigation },
             { key: 'problemsolving', title: 'Problem Solving', navigation: this.props.navigation },
             { key: 'creativity', title: 'Creativity', navigation: this.props.navigation },
-            { key: 'discipline', title: 'Discipline', navigation: this.props.navigation },
+            { key: 'discipline', title: 'Discipline', navigation: this.props.navigation }
         ]
     }
   }

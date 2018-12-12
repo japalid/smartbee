@@ -45,6 +45,26 @@ import NapReportFilterResult from "./screens/NapReportFilterResult";
 import OtherReport from "./screens/OtherReport";
 import OtherReportFilterDate from "./screens/OtherReportFilterDate";
 import OtherReportFilterResult from "./screens/OtherReportFilterResult";
+import Schedule from "./screens/PageSchedule/Schedule";
+import Attendance from "./screens/PageAttendance/Attendance";
+import Bulletin from "./screens/PageBulletin/Bulletin";
+import DetailBulletin from "./screens/PageBulletin/DetailBulletin";
+import AddActivity from "./screens/PageActivity/AddActivity";
+import PottyActivity from "./screens/PageActivity/PottyActivity";
+import DraftActivity from "./screens/PageActivity/DraftActivity";
+import IncidentActivity from "./screens/PageActivity/IncidentActivity";
+import MilkActivity from "./screens/PageActivity/MilkActivity";
+import NapActivity from "./screens/PageActivity/NapActivity";
+import OtherActivity from "./screens/PageActivity/OtherActivity";
+import Settings from "./screens/PageSettings/Settings";
+import AccountSetting from "./screens/PageSettings/AccountSetting";
+import PasswordSetting from "./screens/PageSettings/PasswordSetting";
+import LanguageSetting from "./screens/PageSettings/LanguageSetting";
+import Notification from "./screens/PageNotification/Notification";
+import Medical from "./screens/PageMedical/Medical";
+import Academic from "./screens/PageAcademic/Academic";
+import Food from "./screens/PageFood/Food";
+import Other from "./screens/PageOther/Other";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -299,12 +319,132 @@ export const SignedIn = createStackNavigator(
         title: "Other"
       }
     },
+    Schedule: {
+      screen: Schedule,
+      navigationOptions: {
+        title: "Schedule"
+      }
+    },
+    Attendance: {
+      screen: Attendance,
+      navigationOptions: {
+        title: "Attendance"
+      }
+    },
+    Bulletin: {
+      screen: Bulletin,
+      navigationOptions: {
+        title: "Bulletin"
+      }
+    },
+    AddActivity: {
+      screen: AddActivity,
+      navigationOptions: {
+        title: "Add Activity"
+      }
+    },
+    PottyActivity: {
+      screen: PottyActivity,
+      navigationOptions: {
+        title: "Potty"
+      }
+    },
+    DraftActivity: {
+      screen: DraftActivity,
+      navigationOptions: {
+        title: "Draft"
+      }
+    },
+    IncidentActivity: {
+      screen: IncidentActivity,
+      navigationOptions: {
+        title: "Incident"
+      }
+    },
+    MilkActivity: {
+      screen: MilkActivity,
+      navigationOptions: {
+        title: "Milk"
+      }
+    },
+    NapActivity: {
+      screen: NapActivity,
+      navigationOptions: {
+        title: "Nap"
+      }
+    },
+    OtherActivity: {
+      screen: OtherActivity,
+      navigationOptions: {
+        title: "Other"
+      }
+    },
+    Settings: {
+      screen: Settings,
+      navigationOptions: {
+        title: "Setting"
+      }
+    },
+    AccountSetting: {
+      screen: AccountSetting,
+      navigationOptions: {
+        title: "Your Account"
+      }
+    },
+    PasswordSetting: {
+      screen: PasswordSetting,
+      navigationOptions: {
+        title: "Change Password"
+      }
+    },
+    LanguageSetting: {
+      screen: LanguageSetting,
+      navigationOptions: {
+        title: "Change Language"
+      }
+    },
+    Notification: {
+      screen: Notification,
+      navigationOptions: {
+        title: "Notification"
+      }
+    },
+    Medical: {
+      screen: Medical,
+      navigationOptions: {
+        title: "Medical"
+      }
+    },
+    Academic: {
+      screen: Academic,
+      navigationOptions: {
+        title: "Academic"
+      }
+    },
+    Food: {
+      screen: Food,
+      navigationOptions: {
+        title: "Food"
+      }
+    },
+    Other: {
+      screen: Other,
+      navigationOptions: {
+        title: "Other"
+      }
+    },
+    DetailBulletin: {
+      screen: DetailBulletin,
+      navigationOptions: {
+        title: "Bulletin"
+      }
+    },
     ImageZoom: {
       screen: ImageZoom,
       navigationOptions: {
         title: "Image"
       }
-    },
+    }
   },
   {
     tabBarOptions: {

@@ -1,0 +1,71 @@
+<Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.popupMenu}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    }}>
+                    <View style={{flex:1,backgroundColor:'rgba(255,255,255,0.85)',justifyContent:'center',alignItems:'center'}}>
+                        
+                        <View style={{backgroundColor:"#FFFFFF",borderRadius:15}}>
+                            <View style={{backgroundColor:'#AB8CC8'}}>
+                                <Text style={{color:'#FFFFFF',fontSize:15}}>Select Reason</Text>
+                            </View>
+                            <View>
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Sick'
+                                checked={this.state.checked}
+                            />
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Doctor Appointment'
+                                checked={this.state.checked}
+                            />
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Vacation'
+                                checked={this.state.checked}
+                            />
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Parent Option'
+                                checked={this.state.checked}
+                            />
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Transportation Issue'
+                                checked={this.state.checked}
+                            />
+                            <CheckBox
+                                onPress={this.openPopupMenu(!this.state.popupMenu)}
+                                right={true}
+                                containerStyle={{borderWidth:0,borderColor:'transparent',backgroundColor:'transparent'}}
+                                title='Other'
+                                checked={this.state.checked}
+                            />
+                            </View>
+                        </View>
+                        
+                        
+                        <View style={{bottom:0,right:0,position:'absolute',marginBottom:8}}>
+                            <View style={{alignItems:'center',marginRight:15}}>
+                                <TouchableOpacity  onPress={() => {
+                                        this.openPopupMenu(!this.state.popupMenu);
+                                    }}>
+                                    <Image source={srcFAB} style={{width:58,height:58}} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>

@@ -25,7 +25,7 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={{flex:1}}>
+      <ScrollView>
         <ImageBackground source={srcImage} style={styles.imageBackground}>
         
                 <View style={styles.container}>

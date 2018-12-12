@@ -53,7 +53,9 @@ class Home extends React.Component {
                 <ScrollView>
 
                   <View style={styles.viewHeader}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={()=>this.props.navigation.navigate('Notification')}
+                    >
                       <Image source={srcNotif}></Image>
                     </TouchableOpacity>
                     <Image source={srcLogo}></Image>
@@ -100,7 +102,9 @@ class Home extends React.Component {
                               <Text style={styles.textMenu}>Students</Text>
                             </View>
                           </TouchableOpacity>
-                          <TouchableOpacity style={styles.btnMenu}>
+                          <TouchableOpacity 
+                            
+                          style={styles.btnMenu}>
                             <View style={styles.viewInsideMenu}>
                               <Image source={srcSchedules}></Image>
                               <Text style={styles.textMenu}>Schedules</Text>
@@ -109,19 +113,25 @@ class Home extends React.Component {
                         </View>
 
                         <View style={styles.viewMenu}>
-                          <TouchableOpacity style={styles.btnMenu}>
+                          <TouchableOpacity 
+                            onPress={()=>this.props.navigation.navigate("Attendance")}
+                          style={styles.btnMenu}>
                             <View style={styles.viewInsideMenu}>
                               <Image source={srcAttendent}></Image>
                               <Text style={styles.textMenu}>Attendance</Text>
                             </View>
                           </TouchableOpacity>
-                          <TouchableOpacity style={styles.btnMenu}>
+                          <TouchableOpacity 
+                            onPress={()=>this.props.navigation.navigate("Bulletin")}
+                          style={styles.btnMenu}>
                             <View style={styles.viewInsideMenu}>
                               <Image source={srcBulletin}></Image>
                               <Text style={styles.textMenu}>Bulletin</Text>
                             </View>
                           </TouchableOpacity>
-                          <TouchableOpacity style={styles.btnMenu}>
+                          <TouchableOpacity 
+                            onPress={()=>this.props.navigation.navigate("Settings")}
+                          style={styles.btnMenu}>
                             <View style={styles.viewInsideMenu}>
                               <Image source={srcSetting}></Image>
                               <Text style={styles.textMenu}>Settings</Text>
@@ -139,29 +149,39 @@ class Home extends React.Component {
                           <View style={{flex:1,backgroundColor:'rgba(255,255,255,0.85)',justifyContent:'center',alignItems:'center'}}>
                             
                               <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                                <TouchableOpacity style={{alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity 
+                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Medical')}}
+                                style={{alignItems:'center',justifyContent:'center'}}>
                                   <Image source={srcMedical} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
                                   <Text style={{color:'#576076',fontSize:11}}>Medical</Text>
                                 </TouchableOpacity>
                               </View>
 
                               <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: -20}}>
-                                <TouchableOpacity style={{marginRight:50,alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity 
+                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('AddActivity')}}
+                                style={{marginRight:50,alignItems:'center',justifyContent:'center'}}>
                                   <Image source={srcActivity} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
                                   <Text style={{color:'#576076',fontSize:11}}>Activity</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{marginLeft:50,alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity 
+                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Academic')}}
+                                style={{marginLeft:50,alignItems:'center',justifyContent:'center'}}>
                                   <Image source={srcAcademic} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
                                   <Text style={{color:'#576076',fontSize:11}}>Academic</Text>
                                 </TouchableOpacity>
                               </View>
 
                               <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: 15}}>
-                                <TouchableOpacity style={{marginRight:15,alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity 
+                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Food')}}
+                                style={{marginRight:15,alignItems:'center',justifyContent:'center'}}>
                                   <Image source={srcFood} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
                                   <Text style={{color:'#576076',fontSize:11}}>Food</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{marginLeft:15,alignItems:'center',justifyContent:'center'}}>
+                                <TouchableOpacity 
+                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Other')}}
+                                style={{marginLeft:15,alignItems:'center',justifyContent:'center'}}>
                                   <Image source={srcOther} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
                                   <Text style={{color:'#576076',fontSize:11}}>Other</Text>
                                 </TouchableOpacity>
