@@ -103,7 +103,7 @@ class Home extends React.Component {
                             </View>
                           </TouchableOpacity>
                           <TouchableOpacity 
-                            
+                            onPress={()=>this.props.navigation.navigate("Schedule")}
                           style={styles.btnMenu}>
                             <View style={styles.viewInsideMenu}>
                               <Image source={srcSchedules}></Image>

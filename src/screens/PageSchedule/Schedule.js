@@ -1,8 +1,17 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, Platform } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, Platform, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, FlatList } from "react-native-gesture-handler";
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import api from "../../networks/api";
+import StatusBarDefault from "../../utils/StatusBarDefault";
+import constants from '../../networks/constants';
+
+import AgendaList from './Components/AgendaList';
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 class Schedule extends React.Component {
 
@@ -12,72 +21,138 @@ class Schedule extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      dateTrought: new Date(),
+      monthTrought: monthNames[new Date().getMonth()] + " " + new Date().getFullYear(),
+      data: [],
+      loading: true,
+      selected: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
+    }
+    this.nextMonth = this.nextMonth.bind(this)
+    this.prevMonth = this.prevMonth.bind(this)
+    this.onDayPress = this.onDayPress.bind(this);
+    this._getSchedule();
+  }
+
+  onDayPress(day) {
+    this.setState({
+      selected: day.dateString
+    });
+  }
+
+  _getSchedule() {
+    var arr_data = [];
+    api({
+      method: 'get',
+      url: '/jadwal/1'
+    }).then((resp) => {
+      arr_data.push(resp)
+      this.setState({data:arr_data,loading:false})
+    })
   }
 
   componentDidMount() {
   }
 
-  signUp() {
-    this.props.navigation.push('SignUp');
+  _renderItem = ({item}) => <AgendaList item={item} navigation={this.props.navigation} />
+
+  nextMonth(d) {
+    var newa = new Date(d)
+    var datna = d.setMonth(newa.getMonth()+1);
+    var nextmon = new Date(datna)
+    var nextname = monthNames[new Date(datna).getMonth()] + " " + new Date(datna).getFullYear()
+    this.setState({dateTrought:nextmon,monthTrought:nextname})
+  }
+
+  prevMonth(d) {
+    var newa = new Date(d)
+    var datna = d.setMonth(newa.getMonth()-1);
+    var nextmon = new Date(datna)
+    var nextname = monthNames[new Date(datna).getMonth()] + " " + new Date(datna).getFullYear()
+    this.setState({dateTrought:nextmon,monthTrought:nextname})
   }
 
   render() {
-    return (
-      <ScrollView 
-      showsHorizontalScrollIndicator={false}
-      >
-        <View style={styles.container}>
-            <CalendarList
-              theme={{
-                'stylesheet.calendar.header': {
-                  
-                }
-              }}
-                // Initially visible month. Default = Date()
-                current={'2012-03-01'}
-                // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                // minDate={'2012-05-10'}
-                // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                // maxDate={'2012-05-30'}
-                // Handler which gets executed on day press. Default = undefined
-                onDayPress={(day) => {console.log('selected day', day)}}
-                // Handler which gets executed on day long press. Default = undefined
-                onDayLongPress={(day) => {console.log('selected day', day)}}
-                // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-                // monthFormat={'M'}
-                // Handler which gets executed when visible month changes in calendar. Default = undefined
-                onMonthChange={(month) => {console.log('month changed', month)}}
-                // Hide month navigation arrows. Default = false
-                // hideArrows={false}
-                // Replace default arrows with custom ones (direction can be 'left' or 'right')
-                // renderArrow={(direction) => (<Arrow />)}
-                // Do not show days of other months in month page. Default = false
-                // hideExtraDays={false}
-                // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-                // day from another month that is visible in calendar page. Default = false
-                // disableMonthChange={false}
-                // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                firstDay={1}
-                // Hide day names. Default = false
-                hideDayNames={false}
-                // Show week numbers to the left. Default = false
-                showWeekNumbers={false}
-                // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-                onPressArrowLeft={substractMonth => substractMonth()}
-                // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-                onPressArrowRight={addMonth => addMonth()}
-                />
-        </View>
-      </ScrollView>
-    );
+
+    if(this.state.loading) {
+      return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                <ActivityIndicator size="large" color={constants.color.purple} />
+              </View>
+          )
+    }else {
+      return (
+        <ScrollView 
+        showsHorizontalScrollIndicator={false}
+        style={{backgroundColor:'#F9F9FA'}}
+        >
+          <StatusBarDefault />
+          <View style={styles.container}>
+              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',alignItems:'center',justifyContent:'space-between',height:60}}>
+                <View style={{marginLeft:15}}>
+                  <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                </View>
+                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                  <TouchableOpacity 
+                      onPress={()=>this.prevMonth(this.state.dateTrought)}>
+                      <View style={{alignItems:'center'}}>
+                        <Image source={require("../../images/icon/prevmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
+                      </View>
+                  </TouchableOpacity>
+                  <View style={{margin:10}}>
+                    <Text style={{color:'#fff'}}>{this.state.monthTrought}</Text>
+                  </View>
+                  <TouchableOpacity 
+                    onPress={()=>this.nextMonth(this.state.dateTrought)}>
+                    <View style={{alignItems:'center'}}>
+                      <Image source={require("../../images/icon/nextmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={{marginRight:15}}>
+                  <TouchableOpacity
+                  onPress={()=>this.props.navigation.navigate("ScheduleNew")}>
+                    <Image source={require("../../images/icon/iconpluscalendar.png")} style={{width:20,height:20}} />                
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <Calendar
+                theme={{
+                  'stylesheet.calendar.header': {
+                    header: {
+                      height: 0
+                    },
+                  },
+                  selectedDayBackgroundColor: '#F00A6B',
+                  selectedDayTextColor: 'white',
+                }}
+                  markingType={'custom'}
+                  markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, color:'#fff',textColor:'#fff'}}}
+                  current={this.state.dateTrought}
+                  onDayPress={(day) => {this.onDayPress(day)}}
+                  onDayLongPress={(day) => {console.warn('selected day', day)}}
+                  onMonthChange={(month) => {console.warn('month changed', month)}}
+                  hideArrows={true}
+                  hideDayNames={false}
+                  showWeekNumbers={false}
+                  hideExtraDays={true}
+                  />
+
+                <View style={{marginTop:15}}>
+                    <FlatList
+                      scrollEnabled={false}
+                          data={this.state.data}
+                          renderItem={this._renderItem}
+                          keyExtractor={(item, index) => item.id+""}
+                      /> 
+                </View>
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
-  imageBackground: {
-    width: '100%',
-    height: '100%'
-  },
   container: {
     flex: 1,
     justifyContent: 'center',

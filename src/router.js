@@ -46,6 +46,9 @@ import OtherReport from "./screens/OtherReport";
 import OtherReportFilterDate from "./screens/OtherReportFilterDate";
 import OtherReportFilterResult from "./screens/OtherReportFilterResult";
 import Schedule from "./screens/PageSchedule/Schedule";
+import ScheduleDetail from "./screens/PageSchedule/ScheduleDetail";
+import ScheduleEdit from "./screens/PageSchedule/ScheduleEdit";
+import ScheduleNew from "./screens/PageSchedule/ScheduleNew";
 import Attendance from "./screens/PageAttendance/Attendance";
 import Bulletin from "./screens/PageBulletin/Bulletin";
 import DetailBulletin from "./screens/PageBulletin/DetailBulletin";
@@ -323,6 +326,24 @@ export const SignedIn = createStackNavigator(
       screen: Schedule,
       navigationOptions: {
         title: "Schedule"
+      }
+    },
+    ScheduleDetail: {
+      screen: ScheduleDetail,
+      navigationOptions: {
+        title: ""
+      }
+    },
+    ScheduleEdit: {
+      screen: ScheduleEdit,
+      navigationOptions: {
+        title: "Event Detail"
+      }
+    },
+    ScheduleNew: {
+      screen: ScheduleNew,
+      navigationOptions: {
+        title: "New Event"
       }
     },
     Attendance: {
