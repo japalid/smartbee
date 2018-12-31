@@ -8,6 +8,8 @@ import StatusBarDefault from "../../utils/StatusBarDefault";
 import constants from '../../networks/constants';
 var srcStudent = require("../../images/studentexample.png");
 
+const width = Dimensions.get("window").width;
+
 class ScheduleEdit extends React.Component {
 
   static navigationOptions = {
@@ -20,7 +22,6 @@ class ScheduleEdit extends React.Component {
       data: [],
       loading: false,
       items: {}
-      
     }
   }
 
@@ -28,7 +29,6 @@ class ScheduleEdit extends React.Component {
   }
 
   render() {
-    const width = Dimensions.get("window").width
     if(this.state.loading) {
       return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                 <ActivityIndicator size="large" color={constants.color.purple} />
@@ -38,25 +38,27 @@ class ScheduleEdit extends React.Component {
       return (
           <View style={styles.container}>
             <StatusBarDefault />
-              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',alignItems:'center',justifyContent:'space-between',height:60}}>
-                <View style={{marginLeft:15}}>
-                <TouchableOpacity
-                    onPress={()=>this.props.navigation.pop()}
-                >
-                  <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
-                </TouchableOpacity>
-                </View>
-                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                  
-                  <View style={{margin:10}}>
-                    <Text style={{color:'#fff',fontSize:16}}>Event Detail</Text>
-                  </View>
-                  
-                </View>
-                <View style={{marginRight:15}}>
-                  <TouchableOpacity>
-                      <Text style={{color:'#fff'}}>Done</Text>
-                  </TouchableOpacity>
+              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70}}>
+                <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                    <View style={{marginLeft:15}}>
+                    <TouchableOpacity
+                        onPress={()=>this.props.navigation.pop()}
+                    >
+                    <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                    </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    
+                    <View style={{margin:10}}>
+                        <Text style={{color:'#fff',fontSize:16}}>Event Detail</Text>
+                    </View>
+                    
+                    </View>
+                    <View style={{marginRight:15}}>
+                    <TouchableOpacity>
+                        <Text style={{color:'#fff'}}>Done</Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
               </View>
             <ScrollView showsVerticalScrollIndicator={false}>

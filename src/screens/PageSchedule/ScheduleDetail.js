@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, Platform, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, Platform, TouchableOpacity, ActivityIndicator, Dimensions } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 import { ScrollView, FlatList } from "react-native-gesture-handler";
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
@@ -12,6 +12,8 @@ import AgendaList from './Components/AgendaList';
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
+const width = Dimensions.get("window").width;
 
 class ScheduleDetail extends React.Component {
 
@@ -82,29 +84,33 @@ class ScheduleDetail extends React.Component {
         >
           <StatusBarDefault />
           <View style={styles.container}>
-              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',alignItems:'center',justifyContent:'space-between',height:60}}>
-                <View style={{marginLeft:15}}>
-                  <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
-                </View>
-                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                  <TouchableOpacity 
-                      onPress={()=>this.prevMonth(this.state.dateTrought)}>
-                      <View style={{alignItems:'center'}}>
-                        <Image source={require("../../images/icon/prevmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
-                      </View>
-                  </TouchableOpacity>
-                  <View style={{margin:10}}>
-                    <Text style={{color:'#fff'}}>{this.state.monthTrought}</Text>
+              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70}}>
+                <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                  <View style={{marginLeft:15}}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+                      <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity 
-                    onPress={()=>this.nextMonth(this.state.dateTrought)}>
-                    <View style={{alignItems:'center'}}>
-                      <Image source={require("../../images/icon/nextmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
+                  <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    <TouchableOpacity 
+                        onPress={()=>this.prevMonth(this.state.dateTrought)}>
+                        <View style={{alignItems:'center'}}>
+                          <Image source={require("../../images/icon/prevmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{margin:10}}>
+                      <Text style={{color:'#fff'}}>{this.state.monthTrought}</Text>
                     </View>
-                  </TouchableOpacity>
-                </View>
-                <View style={{marginRight:15}}>
-                  <Image source={require("../../images/icon/iconpluscalendar.png")} style={{width:20,height:20}} />                
+                    <TouchableOpacity 
+                      onPress={()=>this.nextMonth(this.state.dateTrought)}>
+                      <View style={{alignItems:'center'}}>
+                        <Image source={require("../../images/icon/nextmonthicon.png")} style={{width:20,height:20,alignItems:'center'}} />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{marginRight:15}}>
+                    <Image source={require("../../images/icon/iconpluscalendar.png")} style={{width:20,height:20}} />                
+                  </View>
                 </View>
               </View>
               <Calendar

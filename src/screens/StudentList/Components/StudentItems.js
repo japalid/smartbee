@@ -18,9 +18,9 @@ class StudentItems extends React.Component {
         <TouchableOpacity 
             onPress={()=>this.props.navigation.navigate("DailyReport")}
         >
-            <View style={{flexDirection:'row',borderBottomColor:"#707070",borderBottomWidth:0.2,alignItems:'center',marginTop:15,paddingBottom:10}}>
-                <Image source={srcAvatar} style={{width:50,height:50,marginLeft:30}}></Image>
-                <Text style={{color:"#2E313C",fontSize:13,marginLeft:10}}>{item.name}</Text>
+            <View style={{flexDirection:'row',borderBottomColor:"#707070",borderBottomWidth:0.1,alignItems:'center',marginTop:15,paddingBottom:10}}>
+                <Image source={{uri:item.foto}} style={{width:50,height:50,marginLeft:30,borderRadius:25}}></Image>
+                <Text style={{color:"#2E313C",fontSize:13,marginLeft:10}}>{item.nama}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -31,6 +31,7 @@ class StudentItems extends React.Component {
                 <TouchableWithoutFeedback>
                     <View style={{justifyContent:'center'}}>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
                             data={this.props.item}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => item.id+""}

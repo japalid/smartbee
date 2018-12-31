@@ -38,46 +38,48 @@ class ScheduleNew extends React.Component {
       return (
           <View style={styles.container}>
             <StatusBarDefault />
-              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',alignItems:'center',justifyContent:'space-between',height:60}}>
-                <View style={{marginLeft:15}}>
-                <TouchableOpacity
-                    onPress={()=>this.props.navigation.pop()}
-                >
-                  <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
-                </TouchableOpacity>
-                </View>
-                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                  
-                  <View style={{margin:10}}>
-                    <Text style={{color:'#fff',fontSize:16}}>New Event</Text>
-                  </View>
-                  
-                </View>
-                <View style={{marginRight:15}}>
-                  
+              <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70}}>
+                <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>                
+                    <View style={{marginLeft:15}}>
+                        <TouchableOpacity
+                            onPress={()=>this.props.navigation.pop()}
+                        >
+                            <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    
+                    <View style={{margin:10}}>
+                        <Text style={{color:'#fff',fontSize:16}}>New Event</Text>
+                    </View>
+                    
+                    </View>
+                    <View style={{marginRight:15}}>
+                    
+                    </View>
                 </View>
               </View>
             <ScrollView showsVerticalScrollIndicator={false}>
               
               <View style={{marginLeft:15,marginRight:15}}>
-                <View style={{borderBottomColor:'#707070',borderBottomWidth:1}}>
+                <View style={{borderBottomColor:'#707070',borderBottomWidth:0.4,paddingBottom:15,marginTop:20}}>
                     <TextInput 
                         placeholder={"Type your title ..."}
                     />
                 </View>
-                <View style={{borderBottomColor:'#707070',borderBottomWidth:1}}>
+                <View style={{borderBottomColor:'#707070',borderBottomWidth:0.4,paddingBottom:15,marginTop:10}}>
                     <TextInput 
                         placeholder={"Location"}
                     />
                 </View>
-                <View style={{borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15}}>
+                <View style={{borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,paddingBottom:15,marginTop:10}}>
                     <TextInput 
                     multiline={true}
                     numberOfLines={4}
                         placeholder={"Notes ..."}
                     />
                 </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,paddingBottom:15}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,paddingBottom:15}}>
                     <View style={{marginLeft:5}}>
                         <Text>Starts</Text>
                     </View>
@@ -94,7 +96,7 @@ class ScheduleNew extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,paddingBottom:15}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,paddingBottom:15}}>
                     <View style={{marginLeft:5}}>
                         <Text>Ends</Text>
                     </View>
@@ -104,7 +106,7 @@ class ScheduleNew extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,paddingBottom:15}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,paddingBottom:15}}>
                     <View style={{marginLeft:5}}>
                         <Text>Invitees</Text>
                     </View>
@@ -114,7 +116,7 @@ class ScheduleNew extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,paddingBottom:15}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,paddingBottom:15}}>
                     <View style={{marginLeft:5}}>
                         <Text>Alert</Text>
                     </View>
@@ -124,7 +126,7 @@ class ScheduleNew extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15}}>
+                <View style={{borderBottomColor:'#707070',borderBottomWidth:0.4,marginBottom:15,marginTop: 10,paddingBottom:15}}>
                     <TextInput 
                         placeholder={"Price"}
                     />

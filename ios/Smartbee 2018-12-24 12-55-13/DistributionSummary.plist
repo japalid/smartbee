@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Smartbee.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>4D9058EE64FC01873176F8DF57F466F298331412</string>
+				<key>dateExpires</key>
+				<string>24/12/19</string>
+				<key>type</key>
+				<string>iOS Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>4ST7M6TLU8.com.smartbeeteacher.app</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>4ST7M6TLU8</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>4ST7M6TLU8.com.smartbeeteacher.app</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>Smartbee.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>26c78b8f-1264-4270-a0b0-b15abfd78c8f</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>4ST7M6TLU8</string>
+				<key>name</key>
+				<string>Raynaldo Winarni</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

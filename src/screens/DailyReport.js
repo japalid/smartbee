@@ -1,34 +1,22 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList,Modal } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList,Modal,StatusBar, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DailyReportItems from "./DailyReportList/Components/DailyReportItems";
+import FAB from "../utils/FAB";
 var srcBg = require("../images/background.png");
 var srcLeft = require("../images/icon/dailyreportleftarrow.png");
 var srcRight = require("../images/icon/dailyreportrightarrow.png");
 var srcAvatar = require("../images/studentexample.png");
-var srcFAB = require("../images/icon/fabdailyreporticon.png");
-var srcFood = require("../images/icon/foodicon.png");
-var srcActivity = require("../images/icon/activityicon.png");
-var srcMedic = require("../images/icon/medicicon.png");
-var srcAcademic = require("../images/icon/academicicon.png");
-var srcPotty = require("../images/icon/pottyicon.png");
-var srcIncident = require("../images/icon/incidenticon.png");
-var srcMilk = require("../images/icon/milkicon.png");
-var srcNap = require("../images/icon/napicon.png");
-var srcOther = require("../images/icon/drothericon.png");
 
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 class DailyReport extends React.Component {
 
   static navigationOptions = () => ({
-    title: "Daily Report",
-    headerTintColor: '#FFFFFF',
-    headerTitleStyle:{ color: '#FFFFFF',alignSelf: 'center'},
-    headerStyle: {
-        backgroundColor: '#AD90CA'
-    },
+    header: null
   });
 
   constructor(props) {
@@ -89,10 +77,32 @@ class DailyReport extends React.Component {
 
   render() {
     return (
+        <View style={styles.container}>
+        
+        <StatusBar backgroundColor="#AD90CA" />
+        
+        <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70 }}>
+            <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                <View style={{marginLeft:15}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+                    <Image source={require("../images/icon/backicon.png")} style={{width:10,height:20}} />
+                </TouchableOpacity>
+                </View>
+                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                <View style={{margin:10}}>
+                    <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Daily Report</Text>
+                </View>
+                </View>
+                <View style={{marginRight:15}}>
+                
+                </View>
+            </View>
+        </View>
+
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
-            <View style={styles.container}>
+            <View>
                 <View style={{height:46,backgroundColor:'#8865A9',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                     <Image source={srcLeft} style={{marginLeft:10}} />
                     <TouchableOpacity
@@ -123,123 +133,11 @@ class DailyReport extends React.Component {
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}
                 />
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={this.state.popupMenu}
-                    onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                    }}>
-                    <View style={{flex:1,backgroundColor:'rgba(255,255,255,0.85)',justifyContent:'center',alignItems:'center'}}>
-                        
-                        <View style={{bottom:0,right:0,position:'absolute',marginBottom:68,marginRight:25}}>
-                            <View style={{flexDirection:'column',paddingTop:15}}>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Food</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("FoodReport"); }}>
-                                    <Image source={srcFood} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Activity</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("ActivityReport"); }}>
-                                    <Image source={srcActivity} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Medical</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("MedicalReport"); }}>
-                                        <Image source={srcMedic} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Academic</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("AcademicReportGraph"); }}>
-                                        <Image source={srcAcademic} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Potty</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("PottyReport"); }}>
-                                        <Image source={srcPotty} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Incident</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("IncidentReport"); }}>
-                                        <Image source={srcIncident} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Milk</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("MilkReport"); }}>
-                                        <Image source={srcMilk} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Nap</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("NapReport"); }}>
-                                        <Image source={srcNap} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
-                                    <View style={{justifyContent:'center',width:110,height:35,backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',borderColor:'#707070',borderWidth:0.5,shadowColor:'#707070',shadowOffset:{  width: 1,  height: 1,  },shadowOpacity: 1}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Other</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("OtherReport"); }}>
-                                        <Image source={srcOther} style={{width:39,height:45,marginLeft:10}} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        
-                        <View style={{bottom:0,right:0,position:'absolute',marginBottom:8}}>
-                            <View style={{alignItems:'center',marginRight:15}}>
-                                <TouchableOpacity  onPress={() => {
-                                        this.openPopupMenu(!this.state.popupMenu);
-                                    }}>
-                                    <Image source={srcFAB} style={{width:58,height:58}} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <View style={{bottom:0,right:0,position:'absolute',marginBottom:8}}>
-                    <View style={{alignItems:'center',marginRight:15}}>
-                        <TouchableOpacity onPress={() => {
-                              this.openPopupMenu(true);
-                            }}>
-                            <Image source={srcFAB} style={{width:58,height:58}} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                
             </View>
         </ScrollView>
+        <FAB navigation={this.props.navigation} />
+        </View>
     );
   }
 }

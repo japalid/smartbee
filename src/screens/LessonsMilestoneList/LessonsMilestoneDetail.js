@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#E7E7E7'
+    backgroundColor: '#FFF'
   },
   viewRow: {
       alignItems: 'center',

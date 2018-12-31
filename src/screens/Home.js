@@ -1,6 +1,10 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Modal, Platform } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, Dimensions, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Avatar } from 'react-native-elements';
+import {scale, verticalScale, moderateScale, customScaleAndroid, customScale} from '../utils/Scale'
+import Modal from 'react-native-modalbox';
 var srcImage = require("../images/bgdashboard.png");
 var srcLogo = require("../images/logodashboard.png");
 var srcChat = require("../images/icon/chaticon.png");
@@ -22,6 +26,9 @@ var srcFood = require("../images/icon/foodicon.png");
 var srcOther = require("../images/icon/othericon.png");
 var srcAcademic = require("../images/icon/academicicon.png");
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
 class Home extends React.Component {
 
   static navigationOptions = {
@@ -39,53 +46,134 @@ class Home extends React.Component {
   componentDidMount() {
   }
 
-  openPopupMenu(visible) {
-    this.setState({popupMenu: visible});
+  openPopupMenu() {
+    this.refs.myModal.open();
+  }
+
+  closePopupMenu() {
+    this.refs.myModal.close();
   }
 
   render() {
     return (
         <View style={styles.container}>
+            <StatusBar backgroundColor="#F5EBE9"/>
+            <Modal 
+                      ref={"myModal"}
+                      style={{
+                          width: width,
+                          height: height,
+                          backgroundColor: 'rgba(255,255,255,0.85)'
+                      }}
+                      position='center'
+                      backdrop={true}
+                      onClosed={()=>{
+                      }}
+                  >
+                  <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                  
+                                  <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                                    <TouchableOpacity 
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Medical')}}
+                                    style={{alignItems:'center',justifyContent:'center'}}>
+                                      <Image source={srcMedical} style={{width:moderateScale(51.76),height:moderateScale(59.8),marginBottom:moderateScale(10)}}></Image>
+                                      <Text style={{color:'#576076',fontSize:11}}>Medical</Text>
+                                    </TouchableOpacity>
+                                  </View>
+          
+                                  <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: -20}}>
+                                    <TouchableOpacity 
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('AddActivity')}}
+                                    style={{marginRight:moderateScale(50),alignItems:'center',justifyContent:'center'}}>
+                                      <Image source={srcActivity} style={{width:moderateScale(51.76),height:moderateScale(59.8),marginBottom:moderateScale(10)}}></Image>
+                                      <Text style={{color:'#576076',fontSize:11}}>Activity</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity 
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Academic')}}
+                                    style={{marginLeft:moderateScale(50),alignItems:'center',justifyContent:'center'}}>
+                                      <Image source={srcAcademic} style={{width:moderateScale(51.76),height:moderateScale(59.8),marginBottom:moderateScale(10)}}></Image>
+                                      <Text style={{color:'#576076',fontSize:11}}>Academic</Text>
+                                    </TouchableOpacity>
+                                  </View>
+          
+                                  <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: moderateScale(15)}}>
+                                    <TouchableOpacity 
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Food')}}
+                                    style={{marginRight:moderateScale(15),alignItems:'center',justifyContent:'center'}}>
+                                      <Image source={srcFood} style={{width:moderateScale(51.76),height:moderateScale(59.8)}}></Image>
+                                      <Text style={{color:'#576076',fontSize:11}}>Food</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity 
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Other')}}
+                                    style={{marginLeft:moderateScale(15),alignItems:'center',justifyContent:'center'}}>
+                                      <Image source={srcOther} style={{width:moderateScale(51.76),height:moderateScale(59.8)}}></Image>
+                                      <Text style={{color:'#576076',fontSize:11}}>Other</Text>
+                                    </TouchableOpacity>
+                                  </View>
+          
+          
+                                  <View style={{opacity:1.0,alignItems:'center',justifyContent:'center',width:width,position:'absolute',height:moderateScale(38.86),bottom:moderateScale(hp('10%'))}}>
+                                    <TouchableOpacity onPress={() => {
+                                        this.closePopupMenu();
+                                      }}>
+                                      <Image style={{width:moderateScale(34),height:moderateScale(38.86)}} source={srcCancel}></Image>
+                                    </TouchableOpacity>
+                                  </View>
+                                
+                              </View>
+                  </Modal>
 
-            <Image source={srcImage} style={styles.imageBackground}>
-            </Image>
-           
-                <ScrollView>
+            <Image source={srcImage} style={styles.imageBackground}/>
 
-                  <View style={styles.viewHeader}>
-                    <TouchableOpacity
-                      onPress={()=>this.props.navigation.navigate('Notification')}
-                    >
-                      <Image source={srcNotif}></Image>
-                    </TouchableOpacity>
-                    <Image source={srcLogo}></Image>
-                    <TouchableOpacity>
-                      <Image source={srcChat}></Image>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.viewAvatar}>
-                    <Image source={srcAvatar} style={styles.imageAvatar}></Image>
-                  </View>
-
-                  <View style={styles.viewPanel}>
-                    <ImageBackground source={srcBg} style={styles.imagePanel}>
-
-                        <View style={styles.viewNama}>
-                          <Text style={styles.textNama}>Miss Elsya</Text>
-                          <Text style={styles.textLevel}>Teacher</Text>
+            <View style={{height:hp('10%'),flexDirection:'row', justifyContent:'space-between',padding:10,
+    marginTop: (Platform.OS) == 'ios' ? 30 : 0}}>
+              <TouchableOpacity
+                onPress={()=>this.props.navigation.navigate('Notification')}
+              >
+                <Image source={srcNotif}></Image>
+              </TouchableOpacity>
+              <Image source={srcLogo}></Image>
+              <TouchableOpacity>
+                <Image source={srcChat}></Image>
+              </TouchableOpacity>
+            </View>
+              <View style={{height:hp('4%')}}></View>
+              <View style={{height:hp('78%'),width:wp('100%'),alignItems:'center'}}>
+                <View style={{height:hp('78%'),width:width - moderateScale(20),backgroundColor:'rgba(255,255,255,0.6)'}}>
+                    <View style={{alignItems:'center'}}>
+                      <View
+                        style={{width:moderateScale(105),height:moderateScale(105),backgroundColor:'#F5EBE9',alignItems:'center',borderRadius:moderateScale(105)/2,marginTop: - moderateScale(80)/2}}
+                      >
+                        <View style={{alignItems:'center',justifyContent:'center',height:moderateScale(105)}}>
+                          <View style={{alignItems:'center',height:moderateScale(95)}}>
+                            <Avatar
+                                width={moderateScale(95)}
+                                height={moderateScale(95)}
+                                rounded
+                                source={srcAvatar}
+                                overlayContainerStyle={{backgroundColor: 'white'}}
+                                onPress={() => console.log("Works!")}
+                                // activeOpacity={0.8}
+                            />
+                          </View>
                         </View>
+                      </View>
+                    </View>
+                    <View style={{justifyContent: 'center',alignItems: 'center',marginBottom:moderateScale(5)}}>
+                      <Text style={{fontSize: 22,color: '#576076'}}>Miss Elsya</Text>
+                      <Text style={{fontSize: 12,color: '#576076'}}>Teacher</Text>
+                    </View>
 
-                        <View style={styles.viewWelcome}>
-                          <ImageBackground source={srcWelcome} style={styles.imageWelcome}>
-                            <View style={styles.viewInsideWelcome}>
-                              <Text style={styles.textWelcome}>Hello, Miss Elysa</Text>
-                              <Text style={styles.textWelcome}>How Would you like to start your class today</Text>
-                            </View>
-                          </ImageBackground>
+                    <View style={{justifyContent: "center",alignItems: 'center'}}>
+
+                    <ImageBackground source={srcWelcome} style={{width: moderateScale(295),height: moderateScale(45),alignItems:'center',justifyContent:'center',marginBottom:moderateScale(10)}}>
+                        <View style={{justifyContent: 'center',alignItems: 'center'}}>
+                          <Text style={styles.textWelcome}>Hello, Miss Elysa</Text>
+                          <Text style={styles.textWelcome}>How Would you like to start your class today</Text>
                         </View>
-
-                        <View style={styles.viewMenu}>
+                      </ImageBackground>
+                      <View>
+                      <View style={{flexDirection: 'row',justifyContent: 'space-between',width:moderateScale(295),alignItems:"center",marginBottom:moderateScale(10)}}>
                           <TouchableOpacity
                             onPress={()=>this.props.navigation.navigate("Lessons")}
                           style={styles.btnMenu}>
@@ -110,9 +198,9 @@ class Home extends React.Component {
                               <Text style={styles.textMenu}>Schedules</Text>
                             </View>
                           </TouchableOpacity>
-                        </View>
+                      </View>
 
-                        <View style={styles.viewMenu}>
+                      <View style={{flexDirection: 'row',justifyContent: 'space-between',width:moderateScale(295)}}>
                           <TouchableOpacity 
                             onPress={()=>this.props.navigation.navigate("Attendance")}
                           style={styles.btnMenu}>
@@ -137,81 +225,24 @@ class Home extends React.Component {
                               <Text style={styles.textMenu}>Settings</Text>
                             </View>
                           </TouchableOpacity>
-                        </View>
-
-                        <Modal
-                          animationType="fade"
-                          transparent={true}
-                          visible={this.state.popupMenu}
-                          onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                          }}>
-                          <View style={{flex:1,backgroundColor:'rgba(255,255,255,0.85)',justifyContent:'center',alignItems:'center'}}>
-                            
-                              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                                <TouchableOpacity 
-                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Medical')}}
-                                style={{alignItems:'center',justifyContent:'center'}}>
-                                  <Image source={srcMedical} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
-                                  <Text style={{color:'#576076',fontSize:11}}>Medical</Text>
-                                </TouchableOpacity>
-                              </View>
-
-                              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: -20}}>
-                                <TouchableOpacity 
-                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('AddActivity')}}
-                                style={{marginRight:50,alignItems:'center',justifyContent:'center'}}>
-                                  <Image source={srcActivity} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
-                                  <Text style={{color:'#576076',fontSize:11}}>Activity</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity 
-                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Academic')}}
-                                style={{marginLeft:50,alignItems:'center',justifyContent:'center'}}>
-                                  <Image source={srcAcademic} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
-                                  <Text style={{color:'#576076',fontSize:11}}>Academic</Text>
-                                </TouchableOpacity>
-                              </View>
-
-                              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: 15}}>
-                                <TouchableOpacity 
-                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Food')}}
-                                style={{marginRight:15,alignItems:'center',justifyContent:'center'}}>
-                                  <Image source={srcFood} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
-                                  <Text style={{color:'#576076',fontSize:11}}>Food</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity 
-                                  onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Other')}}
-                                style={{marginLeft:15,alignItems:'center',justifyContent:'center'}}>
-                                  <Image source={srcOther} style={{width:51.76,height:59.8,marginBottom:10}}></Image>
-                                  <Text style={{color:'#576076',fontSize:11}}>Other</Text>
-                                </TouchableOpacity>
-                              </View>
-
-
-                              <View style={{opacity:1.0,bottom:60,alignItems:'center',justifyContent:'center',position:'absolute'}}>
-                                <TouchableOpacity onPress={() => {
-                                    this.openPopupMenu(!this.state.popupMenu);
-                                  }}>
-                                  <Image style={{width:34,height:38.86}} source={srcCancel}></Image>
-                                </TouchableOpacity>
-                              </View>
-                            
-                          </View>
-                        </Modal>
-
-                        <View style={styles.viewAdd}>
-                          <TouchableOpacity onPress={() => {
-                              this.openPopupMenu(true);
-                            }}>
-                            <Image source={srcAdd}></Image>
-                          </TouchableOpacity>
-                        </View>
-
-                    </ImageBackground>
-                  </View>
-
-                </ScrollView>
+                      </View>
+                      
+                    </View>
         </View>
+
+                    <View style={styles.viewAdd}>
+                      <TouchableOpacity onPress={() => {
+                          this.openPopupMenu();
+                        }}>
+                        <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
+                          <Image source={srcAdd} style={{width:moderateScale(34),height:moderateScale(39),alignItems:'center'}}></Image>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    
+                </View>
+              </View>
+              </View>
     );
   }
 }
@@ -222,88 +253,36 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5EBE9'
   },
   imageBackground: {
-    width: 266,
-    height: 173,
+    width: moderateScale(266),
+    height: moderateScale(173),
     bottom: 0,
     position: 'absolute',
-  }, 
-  viewHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 25,
-    marginTop: (Platform.OS) == 'ios' ? 20 : 0
-  },
-  viewAvatar: {
-    marginTop: -10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageAvatar: {
-    width: 96,
-    height: 98,
-    borderRadius: 50
-  },
-  viewPanel: {
-    marginTop: -40,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  imagePanel: {
-    width: 335,
-    height: 504
-  },
-  viewNama: {
-    marginTop: 70,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textNama: {
-    fontSize: 25,
-    color: '#576076'
-  },
-  textLevel: {
-    fontSize: 16,
-    color: '#576076'
-  },
-  viewWelcome: {
-    marginTop: 25,
-    marginBottom: 20,
-    justifyContent: "center",
-    alignItems: 'center'
-  },
-  imageWelcome: {
-    width: 295,
-    height: 45
-  },
-  viewInsideWelcome: {
-    marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   textWelcome: {
     color: '#ffffff',
-    fontSize: 11
-  },
-  viewMenu: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10
-  },
+    fontSize: 11,
+    textAlignVertical:'center'
+  }, 
   btnMenu: {
     backgroundColor: "#E5E5E5",
-    width: 96,
-    height: 96,
+    width: moderateScale(90),
+    height: moderateScale(90),
     borderRadius: 15,
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: 10
   },
   viewInsideMenu: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  viewAdd: {
+    width: width - moderateScale(20),
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    marginBottom: 10,
+    position: 'absolute'
   },
   textMenu: {
     marginTop: 10,
@@ -311,11 +290,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     bottom: 0
   },
-  viewAdd: {
-    marginTop: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
 });
 
 export default Home;

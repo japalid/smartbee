@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, UIManager } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, Dimensions, UIManager, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 var srcImage = require("../images/bannerlessons.png");
@@ -18,15 +18,13 @@ var srcRightGreen = require("../images/icon/rightgreenforcircleicon.png");
 var srcRightRed = require("../images/icon/rightredforcircleicon.png");
 var srcRightYellow = require("../images/icon/rightyellowforcircleicon.png");
 
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+
 class Lessons extends React.Component {
 
   static navigationOptions = () => ({
-    title: "Lessons",
-    headerTintColor: '#FFFFFF',
-    headerTitleStyle:{ color: '#FFFFFF',alignSelf: 'center'},
-    headerStyle: {
-        backgroundColor: '#AD90CA'
-    },
+    header: null
   });
 
   constructor(props) {
@@ -52,7 +50,7 @@ class Lessons extends React.Component {
 
   expand_collapse_Function =()=>
   {
-      LayoutAnimation.configureNext( LayoutAnimation.Presets.linear );
+      LayoutAnimation.configureNext( LayoutAnimation.Presets.easeOut );
 
       if( this.state.expand == false )
       {
@@ -82,10 +80,31 @@ class Lessons extends React.Component {
   render() {
     const percentage = 66;
     return (
+      <View style={{flex:1}}>
+
+      <StatusBar backgroundColor="#AD90CA" />
+
+      <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70 }}>
+            <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                <View style={{marginLeft:15}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+                    <Image source={require("../images/icon/backicon.png")} style={{width:10,height:20}} />
+                </TouchableOpacity>
+                </View>
+                <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                <View style={{margin:10}}>
+                    <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Lessons</Text>
+                </View>
+                </View>
+                <View style={{marginRight:15}}>
+                
+                </View>
+            </View>
+        </View>
+
       <ScrollView contentContainerStyle={{
         flexGrow: 1
     }}>
-           
                 <View style={styles.container}>
                 <Image source={srcBg} style={styles.imageBottom}>
                 </Image>
@@ -116,7 +135,6 @@ class Lessons extends React.Component {
                           
                           <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center',marginLeft:10,marginRight:10,marginTop:5}}>  
                           <TouchableOpacity
-                              onPress={()=>this.props.navigation.navigate("LessonsResultDetail")}
                               style={styles.touchableCircle}>
                               <Image source={srcRightBlue} style={{position:"absolute",right:0,margin:10}}></Image>
                               <View style={{padding:10}}>
@@ -225,13 +243,13 @@ class Lessons extends React.Component {
                 { this.state.showMainMenu ? (
                 <View style={styles.viewMenu}>
                   <ScrollView contentContainerStyle={{
-      flexGrow: 1,
-      justifyContent: 'space-between'
-  }}>
+                      flexGrow: 1,
+                      alignItems: 'center'
+                  }}>
                   <View style={styles.viewSubMenu}>
                     <TouchableOpacity
                       onPress={()=>this.props.navigation.navigate("LessonsMilestone",{tab: 0})}
-                    style={styles.btnMenu}>
+                    style={[styles.btnMenu,{marginTop: 15}]}>
                       <View style={styles.viewInsideMenu}>
                         <Image source={srcKindness}></Image>
                         <Text style={styles.textMenu}>Kindness</Text>
@@ -296,6 +314,7 @@ class Lessons extends React.Component {
               ) : null }
             </View>
       </ScrollView>
+      </View>
     );
   }
 }
@@ -397,8 +416,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 30,
     marginLeft: 30,
-    marginTop: 20,
-    marginBottom: 5
+    marginBottom: 10,
   },
   viewInsideMenu: {
     flexDirection: 'column',

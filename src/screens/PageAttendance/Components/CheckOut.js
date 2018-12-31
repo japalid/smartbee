@@ -32,7 +32,7 @@ class CheckOut extends React.Component {
                 <TouchableOpacity onPress={this._collapsibleProc}>
                     <View style={{justifyContent:'center'}}>
                         <View style={{borderBottomColor:'#707070',borderBottomWidth:0.8,marginLeft:20,marginRight:20,marginTop:30}}>
-                            <Text style={{color:'#B08485',fontSize:10,marginBottom:5,marginLeft:15}}>{this.props.item.title}</Text>
+                            <Text style={{color:'#B08485',fontSize:13,marginBottom:5,marginLeft:15}}>{this.props.item.title}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

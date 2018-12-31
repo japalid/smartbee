@@ -1,6 +1,8 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Alert } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from "react-native";
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 class Milestone extends React.Component {
 
   static navigationOptions = {
@@ -27,19 +29,23 @@ class Milestone extends React.Component {
             <ImageBackground style={{width:'100%',height:250}} imageStyle={{ borderRadius:10 }} source={this.props.imageUri}>
             <View style={{width:'100%',backgroundColor:'#FFBE69',height:30,borderTopLeftRadius:10,borderTopRightRadius:10}}>
                 <View style={{justifyContent:'center',alignItems:'center'}}>
-                <Text style={{fontSize:8,color:'#FFFFFF',textAlign:'center',marginTop:8}}>HAVE YOU REACHED THIS MILESTONE</Text>
+                <Text style={{fontSize:9,color:'#FFFFFF',textAlign:'center',marginTop:8}}>HAVE YOU REACHED THIS MILESTONE</Text>
                 </View>
             </View>
-            <View style={{height:60,bottom:0,position:'absolute',width:'100%'}}>
-                <View style={{bottom:0,position:'absolute',height:30,backgroundColor:'#FFBE69',borderBottomLeftRadius:10,borderBottomRightRadius:10,width:'100%'}}>
-                    <View style={{flexDirection:'row',position:'absolute',bottom:0}}>
-                    <TouchableOpacity
-                        onPress={()=>this._detail()}
-                    >
-                        <Image style={{width:60,height:60}} source={this.props.imageStatus}/>
-                    </TouchableOpacity>
-                    </View>
-                    <Text style={{fontSize:8,color:'#FFFFFF',marginLeft:65,position:'absolute',top:0,marginTop:8}}>{this.props.name}</Text>
+            <View style={{height:60,bottom:0,position:'absolute',width:'100%',flex:1}}>
+                <View style={{flexDirection:'row',position:'absolute',bottom:0}}>
+                  <View
+                      style={{width:'100%'}}
+                      
+                  >
+                      <View style={{position:'absolute',bottom:0,flex:1,height:30,backgroundColor:'#FFBE69',borderBottomLeftRadius:10,borderBottomRightRadius:10,width:'100%'}}>
+                          <Text style={{fontSize:9,color:'#FFFFFF',marginLeft:65,position:'absolute',top:0,marginTop:8}}>{this.props.name}</Text>
+                      </View>
+                      <TouchableOpacity onPress={()=>this._detail()}>
+
+                      <Image style={{width:60,height:60}} source={this.props.imageStatus}/>
+                      </TouchableOpacity>
+                  </View>
                 </View>
             </View>
             </ImageBackground>

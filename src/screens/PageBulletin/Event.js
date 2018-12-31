@@ -25,13 +25,14 @@ class Event extends React.Component {
   _render = ({item,index}) => {
       return(
         <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',marginBottom:10,flex:1,
-        width: 'auto',
+        width: '100%',
         height: 'auto'}}>
-            <TouchableOpacity 
+            <TouchableOpacity
+            style={{borderRadius:15,width:'100%'}}
                 onPress={()=>this._navigate(item.key)}
             >
                 <View style={{borderRadius:15}}>
-                    <Image source={item.image} style={{borderRadius:15}}/>
+                    <Image source={item.image} style={{borderRadius:15,width:'100%'}}/>
                 </View>
             </TouchableOpacity>
             <Text style={{fontSize:10,color:'#464646',marginLeft:5}}>{item.desc}</Text>
@@ -50,13 +51,13 @@ class Event extends React.Component {
       <View style={{flexDirection:'row',paddingVertical: 10,
       paddingHorizontal: 5,flex:1}}>
         <FlatList
-            style={{margin:5}}
+            style={{margin:3}}
             data={ this.state.item1 }
             renderItem={ this._render }
             keyExtractor={(item, index) => item.key+""}
             />
         <FlatList
-            style={{margin:5}}
+            style={{margin:3}}
             data={ this.state.item2 }
             renderItem={ this._render }
             keyExtractor={(item, index) => item.key+""}

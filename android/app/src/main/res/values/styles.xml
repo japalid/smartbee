@@ -3,6 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:datePickerDialogTheme">@style/datePickerTheme</item>
+        <item name="android:timePickerDialogTheme">@style/timePickerTheme</item>
+    </style>
+
+    <style name="datePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#468DF0</item>
+        <item name="colorControlActivated">#468DF0</item>
+        <item name="colorControlHighlight">#468DF0</item>
+    </style>
+
+    <style name="timePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#468DF0</item>
     </style>
 
 </resources>

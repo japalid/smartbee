@@ -1,19 +1,15 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, TextInput } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, TextInput, Platform, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 var srcBg = require("../../images/background.png");
 var srcStudent = require("../../images/studentexample.png");
 import RadioButton from "./Components/RadioButton";
 import RadioButtonJenis from "./Components/RadioButtonJenis";
-
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 class Food extends React.Component {
     static navigationOptions = {
-        title: "Food",
-        headerTintColor: '#FFFFFF',
-        headerTitleStyle:{ color: '#FFFFFF',alignSelf: 'center'},
-        headerStyle: {
-            backgroundColor: '#F56483'
-        },
+        header: null
       };
 
   constructor(props) {
@@ -98,12 +94,30 @@ class Food extends React.Component {
     }
 
   render() {
-    const {width, height} = Dimensions.get('window')
     return (
         <View style={styles.container}>
 
+            <StatusBar backgroundColor="#F56483" />
+            <View style={{flexDirection:'row',backgroundColor:'#F56483',height:70 }}>
+                <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                    <View style={{marginLeft:15}}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+                        <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                    </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    <View style={{margin:10}}>
+                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Food</Text>
+                    </View>
+                    </View>
+                    <View style={{marginRight:15}}>
+                    
+                    </View>
+                </View>
+            </View>
+
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flexDirection:'row',alignItems:'center',height:60,marginTop:20,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'row',alignItems:'center',height:60,marginTop:20,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:15,marginLeft:15,marginRight:15}}>
               <ScrollView
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -120,13 +134,13 @@ class Food extends React.Component {
                       </View>
               </ScrollView>
           </View>
-          <View style={{flexDirection:'row',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'row',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
               <Text style={{marginRight:15,color:'#AEAEAE'}}>Time</Text>
               <TouchableOpacity>
                   <Text style={{color:'#B28486'}}>Today : 08:31 am</Text>
               </TouchableOpacity>
           </View>        
-          <View style={{marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
 
             <View style={{flexDirection:'row',alignItems:'center',borderWidth:1,borderColor:'#E2DEDF',borderRadius:20,backgroundColor:'#F8F8FA'}}>
                 {
@@ -154,7 +168,8 @@ class Food extends React.Component {
                         borderWidth:1,
                         textAlign:'center',
                         backgroundColor: '#F8F8FA',
-                        color: '#878787',borderRadius:15,fontSize:13,width:width/2,marginLeft:35}}
+                        padding: 10,
+                        color: '#878787',borderRadius:15,fontSize:13,width:width/2,marginLeft:15}}
                     placeholder={"Food"}/>
                 </View>
                 <View style={{flex:1,alignItems:'center',flexDirection:'row'}}>
@@ -165,6 +180,7 @@ class Food extends React.Component {
                         borderColor:'#E0DEDE',
                         borderWidth:1,
                         backgroundColor: '#F8F8FA',
+                        padding: 10,
                         color: '#878787',borderRadius:15,fontSize:13,width:width/4,marginLeft:90}}
                     placeholder={"g"}
                     />
@@ -179,7 +195,7 @@ class Food extends React.Component {
 
           </View>
 
-          <View style={{flexDirection:'column',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'column',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
                 <ScrollView
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -199,7 +215,7 @@ class Food extends React.Component {
                       paddingRight: 10,
                       paddingLeft: 10,
                       backgroundColor: '#F4F4F4',
-                      color: '#BEBEBE',borderRadius:15,textAlignVertical:'top'}}
+                      color: '#BEBEBE',borderRadius:15,textAlignVertical:'top',height:98}}
                   placeholder="Note ..."
                   multiline={true}
                   numberOfLines={5}

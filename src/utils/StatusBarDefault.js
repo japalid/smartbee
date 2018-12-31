@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StatusBar } from "react-native";
+import { View, StatusBar, Platform } from "react-native";
 
 class StatusBarDefault extends React.Component {
 
@@ -9,7 +9,7 @@ class StatusBarDefault extends React.Component {
   render() {
     return (
       <View>
-          <StatusBar backgroundColor="#AD90CA"/>
+          <StatusBar backgroundColor="#AD90CA" barStyle="light-content" style={{flex: 1,}}/>
       </View>
     );
   }

@@ -1,18 +1,16 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, TextInput } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, TextInput, Platform, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 var srcBg = require("../../images/background.png");
 var srcStudent = require("../../images/studentexample.png");
 import RadioButton from "./Components/RadioButton";
 
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+
 class Academic extends React.Component {
     static navigationOptions = {
-        title: "Academic",
-        headerTintColor: '#FFFFFF',
-        headerTitleStyle:{ color: '#FFFFFF',alignSelf: 'center'},
-        headerStyle: {
-            backgroundColor: '#90C8BB'
-        },
+        header: null
       };
 
   constructor(props) {
@@ -62,12 +60,30 @@ class Academic extends React.Component {
     }
 
   render() {
-    const {width, height} = Dimensions.get('window')
     return (
         <View style={styles.container}>
 
+            <StatusBar backgroundColor="#90C8BB" />
+            <View style={{flexDirection:'row',backgroundColor:'#90C8BB',height:70 }}>
+                <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
+                    <View style={{marginLeft:15}}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+                        <Image source={require("../../images/icon/backicon.png")} style={{width:10,height:20}} />
+                    </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    <View style={{margin:10}}>
+                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Academic</Text>
+                    </View>
+                    </View>
+                    <View style={{marginRight:15}}>
+                    
+                    </View>
+                </View>
+            </View>
+
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flexDirection:'row',alignItems:'center',height:60,marginTop:20,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:15,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'row',alignItems:'center',height:60,marginTop:20,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:15,marginLeft:15,marginRight:15}}>
               <ScrollView
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -84,13 +100,13 @@ class Academic extends React.Component {
                       </View>
               </ScrollView>
           </View>
-          <View style={{flexDirection:'row',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'row',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
               <Text style={{marginRight:15,color:'#AEAEAE'}}>Time</Text>
               <TouchableOpacity>
                   <Text style={{color:'#B28486'}}>Today : 08:31 am</Text>
               </TouchableOpacity>
           </View>        
-          <View style={{justifyContent:'center',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{justifyContent:'center',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
             <View style={{alignItems:'center',marginBottom:10,flex:1,justifyContent:'center',marginLeft:15,marginRight:15,flexDirection:'column'}}>
                 <TouchableOpacity
                     style={{width:width-30,borderWidth:1,borderColor:'#E2DEDF',borderRadius:20,backgroundColor:'#F8F8FA',padding:10}}
@@ -113,10 +129,9 @@ class Academic extends React.Component {
             <View style={{flex:1,flexDirection:'row',backgroundColor:'#F8F8FA',marginTop:10,borderRadius:20,marginBottom:15}}>
               <TextInput
                   style={{flex: 1,
-                      paddingRight: 10,
-                      paddingLeft: 10,
+                      padding: 10,
                       backgroundColor: '#F8F8FA',
-                      color: '#878787',borderRadius:20,fontSize:15}}
+                      color: '#878787',borderRadius:20,fontSize:15,}}
                   placeholder="Percentage"
                   multiline={false}
                   onChangeText={(searchString) => {this.setState({searchString})}}
@@ -130,7 +145,7 @@ class Academic extends React.Component {
                 </View>
             </View>
           </View>
-          <View style={{flexDirection:'column',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:1,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
+          <View style={{flexDirection:'column',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
                 <ScrollView
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -150,7 +165,7 @@ class Academic extends React.Component {
                       paddingRight: 10,
                       paddingLeft: 10,
                       backgroundColor: '#F4F4F4',
-                      color: '#BEBEBE',borderRadius:15,textAlignVertical:'top'}}
+                      color: '#BEBEBE',borderRadius:15,textAlignVertical:'top',height:98}}
                   placeholder="Note ..."
                   multiline={true}
                   numberOfLines={5}

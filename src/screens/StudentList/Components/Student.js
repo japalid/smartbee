@@ -13,11 +13,12 @@ class Student extends React.Component {
         super(props)
         this.state = {
             isSelected: false,
-            navigation: this.props.navigation
+            navigation: this.props.navigation,
+            loading: true
         }
     }
 
-    _renderStudents = () => ( <StudentItems item={this.props.item.student} navigation={this.state.navigation} /> );
+    _renderStudents = () => ( <StudentItems item={this.props.item.siswa} navigation={this.state.navigation} /> );
 
     _collapsibleProc = () => {
         this.setState((prevState,prevProps) => ({
@@ -31,8 +32,8 @@ class Student extends React.Component {
             <View style={styles.container}>
                 <TouchableOpacity onPress={this._collapsibleProc}>
                     <View style={{justifyContent:'center'}}>
-                        <View style={{borderBottomColor:'#707070',borderBottomWidth:0.8,marginLeft:20,marginRight:20,marginTop:30}}>
-                            <Text style={{color:'#B08485',fontSize:10,marginBottom:5,marginLeft:15}}>{this.props.item.title}</Text>
+                        <View style={{borderBottomColor:'#707070',borderBottomWidth:0.3,marginLeft:20,marginRight:20,marginTop:30}}>
+                            <Text style={{color:'#B08485',fontSize:14,marginBottom:5,marginLeft:15}}>{this.props.item.kelas}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

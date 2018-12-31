@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import PropTypes from 'prop-types'
 import { FlatList } from 'react-native-gesture-handler';
+import {scale, verticalScale, moderateScale, customScaleAndroid, customScale} from '../../../utils/Scale';
 var srcAvatar = require('../../../images/studentexample.png');
 
 const propTypes = {
@@ -31,15 +32,19 @@ class CheckInItems extends React.Component {
                 </View>
                 <View style={{flexDirection:'column'}}>
                     <View style={{flexDirection:'row',marginLeft:25}}>
-                        <TouchableOpacity style={{backgroundColor:'#3A9EC2',borderColor:'#DBDBDB',borderWidth:1,borderRadius:10,paddingLeft:20,paddingRight:20,paddingTop:10,paddingBottom:10,marginRight:10}}>
-                            <Text style={{fontSize:15}}>YES</Text>
+                        <TouchableOpacity style={{width:moderateScale(87),backgroundColor:'#3A9EC2',borderColor:'#DBDBDB',borderWidth:1,borderRadius:10,paddingLeft:20,paddingRight:20,paddingTop:10,paddingBottom:10,marginRight:10,}}>
+                            <View style={{alignItems:'center'}}>
+                                <Text style={{fontSize:15,color:'#fff'}}>YES</Text>
+                            </View>
                         </TouchableOpacity>
                         <TouchableOpacity
                         onPress={() => {
                             this.props.modalShow(true);
                           }}
-                        style={{backgroundColor:'#FFFFFF',borderColor:'#DBDBDB',borderWidth:1,borderRadius:10,paddingLeft:20,paddingRight:20,paddingTop:10,paddingBottom:10}}>
-                            <Text style={{fontSize:15}}>NO</Text>
+                        style={{width:moderateScale(87),backgroundColor:'#FFFFFF',borderColor:'#DBDBDB',borderWidth:1,borderRadius:10,paddingLeft:20,paddingRight:20,paddingTop:10,paddingBottom:10}}>
+                        <View style={{alignItems:'center'}}>
+                            <Text style={{fontSize:15,color:'#2E313C'}}>NO</Text>
+                        </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{flexDirection:'row',marginLeft:25,marginTop:5}}>
