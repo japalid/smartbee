@@ -5,6 +5,8 @@ var srcAvatar = require("../../images/avatar.png");
 var srcCamera = require("../../images/icon/opencamerasettings.png")
 const width = Dimensions.get('window').width;
 const height = Dimensions.get("window").height;
+import { onSignOut } from "../../auth";
+
 class Settings extends React.Component {
 
     static navigationOptions = {
@@ -107,7 +109,9 @@ class Settings extends React.Component {
                 </ScrollView>
 
                 <View style={{bottom:0,position: 'absolute',backgroundColor:'#EE534F',height:50,justifyContent:'center',alignItems:'center',flex:1,width:width}}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={() => onSignOut().then(() => navigation.navigate("SignedOut"))}
+                    >
                         <Text style={{color:'#fff',fontSize:16}}>Logout</Text>
                     </TouchableOpacity>
                 </View>

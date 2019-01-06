@@ -1,10 +1,12 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList, Modal } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList, Modal, ActivityIndicator, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { CheckBox } from 'react-native-elements';
 import ModalReason from './Components/ModalReason';
 import CheckIn from './Components/CheckIn';
+import * as request from "../../networks/request";
+import constants from '../../networks/constants';
 var srcBg = require("../../images/background.png");
 
 class AttendanceCheckIn extends React.Component {
@@ -12,40 +14,34 @@ class AttendanceCheckIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-          {
-            id: 1,
-            title: "Kelas Badak", 
-            data: [
-                { avatar:'',name:'Lily Josh',id:1 },
-                { avatar:'',name:'Cecilla Robbie',id:2 },
-                { avatar:'',name:'Piere Paul',id:3 }
-            ]
-          },
-          {
-            id: 2,
-            title: "Kelas Mawar", 
-            data: [
-                { avatar:'',name:'Robert Pattinson',id:4 }
-            ]
-          },
-          {
-            id: 3,
-            title: "Kelas Melati", 
-            data: [
-                { avatar:'',name:'Carry Puth',id:5 }
-            ]
-          },
-      ],
+      data: [],
+      loading: true,
       popupMenu: false,
       isDateTimePickerVisibleFrom: false,
       checked: false
     };
     this.openPopupMenu = this.openPopupMenu.bind(this)
+    this.getCheckIn();
   }
 
   componentDidMount() {
     
+  }
+
+  getCheckIn() {
+    var response = [];
+    AsyncStorage.getItem("auth-key")
+        .then(async (res) => {
+          if (res !== null) {
+            let resp = await request.attendanceCheckIn(res);
+            let respy = JSON.parse(resp._bodyText);
+            respy.map((item)=>{
+              response.push(item);
+            })
+            this.setState({data:response,loading:false})
+          }
+        })
+        .catch(err => this.setState({data:response,loading:false}))
   }
 
   _showDateTimePickerFrom = () => this.setState({ isDateTimePickerVisibleFrom: true });
@@ -63,28 +59,35 @@ class AttendanceCheckIn extends React.Component {
   _renderItem = ({item}) => <CheckIn item={item} navigation={this.props.navigation} modalShow={this.openPopupMenu.bind(this)} />
 
   render() {
-    return (
-      <ScrollView contentContainerStyle={{flex: 1}} showsVerticalScrollIndicator={false}>
-            <DateTimePicker
-                is24Hour={false}
-                datePickerModeAndroid={"spinner"}
-                mode={"time"}
-                isVisible={this.state.isDateTimePickerVisibleFrom}
-                onConfirm={this._handleDatePickedFrom}
-                onCancel={this._hideDateTimePickerFrom}
-            />
-        <View style={styles.container}>
-            <ImageBackground style={styles.imageBackground} source={srcBg}>
-                <FlatList
-                    data={this.state.data}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => item.id+""}
-                />
-                <ModalReason ref={'modalReason'} parentFlatList={this} ></ModalReason>
-            </ImageBackground>
-        </View>
-      </ScrollView>
-    );
+    if(this.state.loading) {
+      return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+              <ActivityIndicator size="large" color={constants.color.purple} />
+            </View>
+        )
+    }else {
+      return (
+        <ScrollView contentContainerStyle={{flex: 1}} showsVerticalScrollIndicator={false}>
+              <DateTimePicker
+                  is24Hour={false}
+                  datePickerModeAndroid={"spinner"}
+                  mode={"time"}
+                  isVisible={this.state.isDateTimePickerVisibleFrom}
+                  onConfirm={this._handleDatePickedFrom}
+                  onCancel={this._hideDateTimePickerFrom}
+              />
+          <View style={styles.container}>
+              <ImageBackground style={styles.imageBackground} source={srcBg}>
+                  <FlatList
+                      data={this.state.data}
+                      renderItem={this._renderItem}
+                      keyExtractor={(item, index) => item.id+""}
+                  />
+                  <ModalReason ref={'modalReason'} parentFlatList={this} ></ModalReason>
+              </ImageBackground>
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 

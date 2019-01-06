@@ -52,13 +52,13 @@ import ScheduleNew from "./screens/PageSchedule/ScheduleNew";
 import Attendance from "./screens/PageAttendance/Attendance";
 import Bulletin from "./screens/PageBulletin/Bulletin";
 import DetailBulletin from "./screens/PageBulletin/DetailBulletin";
-import AddActivity from "./screens/PageActivity/AddActivity";
-import PottyActivity from "./screens/PageActivity/PottyActivity";
-import DraftActivity from "./screens/PageActivity/DraftActivity";
-import IncidentActivity from "./screens/PageActivity/IncidentActivity";
-import MilkActivity from "./screens/PageActivity/MilkActivity";
-import NapActivity from "./screens/PageActivity/NapActivity";
-import OtherActivity from "./screens/PageActivity/OtherActivity";
+import AddActivity from "./screens/PageOtherMenu/AddActivity";
+import PottyActivity from "./screens/PageOtherMenu/PottyActivity";
+import DraftActivity from "./screens/PageOtherMenu/DraftActivity";
+import IncidentActivity from "./screens/PageOtherMenu/IncidentActivity";
+import MilkActivity from "./screens/PageOtherMenu/MilkActivity";
+import NapActivity from "./screens/PageOtherMenu/NapActivity";
+import OtherActivity from "./screens/PageOtherMenu/OtherActivity";
 import Settings from "./screens/PageSettings/Settings";
 import AccountSetting from "./screens/PageSettings/AccountSetting";
 import PasswordSetting from "./screens/PageSettings/PasswordSetting";
@@ -68,6 +68,7 @@ import Medical from "./screens/PageMedical/Medical";
 import Academic from "./screens/PageAcademic/Academic";
 import Food from "./screens/PageFood/Food";
 import Other from "./screens/PageOther/Other";
+import Activity from "./screens/PageActivity/Activity";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -458,6 +459,12 @@ export const SignedIn = createStackNavigator(
       screen: DetailBulletin,
       navigationOptions: {
         title: "Bulletin"
+      }
+    },
+    Activity: {
+      screen: Activity,
+      navigationOptions: {
+        title: "Activity"
       }
     },
     ImageZoom: {

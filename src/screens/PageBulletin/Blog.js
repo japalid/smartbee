@@ -1,7 +1,7 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, ActivityIndicator } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, Dimensions, ActivityIndicator, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import api from "../../networks/api";
+import * as request from "../../networks/request";
 import constants from '../../networks/constants';
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -23,22 +23,24 @@ class Blog extends React.Component {
   _getBlog() {
     var arr_data_1 = [];
     var arr_data_2 = [];
-    api({
-      method: 'get',
-      url: '/bulletin/blog'
-    }).then((resp) => {
-        var data = resp.data;
-        var numbers = 1;
-        data.map((item)=>{
-            if(numbers%2!=0) {
-                arr_data_1.push(item);
-            }else {
-                arr_data_2.push(item);
-            }
-            numbers++;
+    AsyncStorage.getItem("auth-key")
+        .then(async (res) => {
+          if (res !== null) {
+            let resp = await request.bulletinBlog(res);
+            let respy = JSON.parse(resp._bodyText);
+            var numbers = 1;
+            respy.data.map((item)=>{
+                if(numbers%2!=0) {
+                    arr_data_1.push(item);
+                }else {
+                    arr_data_2.push(item);
+                }
+                numbers++;
+            })
+            this.setState({data1:arr_data_1,data2:arr_data_2,loading:false})
+          }
         })
-        this.setState({data1:arr_data_1,data2:arr_data_2,loading:false})
-    })
+        .catch(err => this.setState({data1:arr_data_1,data2:arr_data_2,loading:false}))
   }
 
   componentDidMount() {
@@ -64,11 +66,11 @@ class Blog extends React.Component {
         width: '100%',
         height: 'auto'}}>
             <TouchableOpacity
-            style={{borderRadius:15,width:'100%'}}
+            style={{borderRadius:15,width:'100%',height:210}}
                 onPress={()=>this._navigate(item.id)}
             >
-                <View style={{borderRadius:15}}>
-                    <AutoHeightImage source={{uri:item.image}} style={{borderRadius:15}} width={width/2-10}/>
+                <View style={{borderRadius:15,width:'100%',height:200}}>
+                <Image source={{uri:item.image}} style={{borderRadius:15,width:'100%',height:'100%',resizeMode:'cover'}} />
                 </View>
             </TouchableOpacity>
             <Text style={{fontSize:10,color:'#464646',marginLeft:5}}>{item.title}</Text>
@@ -77,7 +79,7 @@ class Blog extends React.Component {
   }
 
   _navigate(key) {
-      this.props.route.navigation.navigate("DetailBulletin",{id:key});
+      this.props.route.navigation.navigate("DetailBlog",{id:key});
   }
 
   render() {

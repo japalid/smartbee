@@ -106,13 +106,13 @@ class AcademicReportGraph extends React.Component {
                     <View style={{flexDirection:'row',alignItems:"center",justifyContent:'center',marginTop:15,marginBottom:15,borderRadius:10}}>
                         <TouchableOpacity
                         onPress={()=>{this.props.navigation.pop();this.props.navigation.navigate("AcademicReportGraph")}}
-                        style={{backgroundColor:'#F0A470',borderColor:'#E2DEDF',borderWidth:1}}
+                        style={{backgroundColor:'#F0A470',borderColor:'#E2DEDF',borderWidth:1,borderTopLeftRadius:10,borderBottomLeftRadius:10}}
                         >
                             <Text style={{color:'#FFFFFF',fontSize:15,paddingLeft:15,paddingRight:15,paddingTop:10,paddingBottom:10}}>Graph</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                         onPress={()=>{this.props.navigation.pop();this.props.navigation.navigate("AcademicReportGrade")}}
-                        style={{backgroundColor:'#F8F8F9',borderColor:'#E2DEDF',borderWidth:1}}
+                        style={{backgroundColor:'#F8F8F9',borderColor:'#E2DEDF',borderWidth:1,borderTopRightRadius:10,borderBottomRightRadius:10}}
                         >
                             <Text style={{color:'#2E313C',fontSize:15,paddingLeft:15,paddingRight:15,paddingTop:10,paddingBottom:10}}>Grade</Text>
                         </TouchableOpacity>

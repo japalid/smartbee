@@ -27,11 +27,13 @@ class CheckOutItems extends React.Component {
     };
 
     _renderItem = ({item}) => (
-        <TouchableOpacity>
+        <View>
             <View style={{flexDirection:'row',borderBottomColor:"#707070",borderBottomWidth:0.2,alignItems:'center',marginTop:15,paddingBottom:10}}>
-                <View style={{flexDirection:'column',alignItems:'center',marginLeft:30}}>
-                    <Image source={srcAvatar} style={{width:50,height:50}}></Image>
-                    <Text numberOfLines={1} style={{color:"#2E313C",fontSize:13,width:60}}>{item.name}</Text>
+                <View style={{flexDirection:'column',alignItems:'center',marginLeft:15,justifyContent:'center',marginRight:15}}>
+                    <View style={{alignItems:'center',marginBottom:10}}>
+                        <Image source={{uri:item.foto}} style={{width:50,height:50,borderRadius:25,alignItems:'center'}}></Image>
+                    </View>
+                    <Text style={{color:"#2E313C",fontSize:13}}>{item.nama}</Text>
                 </View>
                 <View style={{flexDirection:'row',marginLeft:25}}>
                     <Text
@@ -43,7 +45,7 @@ class CheckOutItems extends React.Component {
                     </TouchableOpacity>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 
     render() {

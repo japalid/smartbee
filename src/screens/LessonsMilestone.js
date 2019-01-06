@@ -122,13 +122,14 @@ const styles = StyleSheet.create({
   },
   tab: {
     width: 200,
+    height: 40
   },
   indicator: {
     backgroundColor: '#68418D',
   },
   label: {
     color: '#fff',
-    fontWeight: '400',
+    fontWeight: '600',
   },
 });
 

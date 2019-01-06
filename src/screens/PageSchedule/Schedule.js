@@ -27,7 +27,7 @@ class Schedule extends React.Component {
       dateTrought: new Date(),
       monthTrought: monthNames[new Date().getMonth()] + " " + new Date().getFullYear(),
       data: [],
-      loading: true,
+      loading: false,
       selected: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
     }
     this.nextMonth = this.nextMonth.bind(this)
@@ -44,13 +44,13 @@ class Schedule extends React.Component {
 
   _getSchedule() {
     var arr_data = [];
-    api({
-      method: 'get',
-      url: '/jadwal/1'
-    }).then((resp) => {
-      arr_data.push(resp)
-      this.setState({data:arr_data,loading:false})
-    })
+    // api({
+    //   method: 'get',
+    //   url: '/jadwal/1'
+    // }).then((resp) => {
+    //   arr_data.push(resp)
+      // this.setState({data:arr_data,loading:false})
+    // })
   }
 
   componentDidMount() {

@@ -17,6 +17,7 @@ var srcRightBlue = require("../images/icon/rightblueforcircleicon.png");
 var srcRightGreen = require("../images/icon/rightgreenforcircleicon.png");
 var srcRightRed = require("../images/icon/rightredforcircleicon.png");
 var srcRightYellow = require("../images/icon/rightyellowforcircleicon.png");
+import {scale, verticalScale, moderateScale, customScaleAndroid, customScale} from '../utils/Scale';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -136,7 +137,7 @@ class Lessons extends React.Component {
                           <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center',marginLeft:10,marginRight:10,marginTop:5}}>  
                           <TouchableOpacity
                               style={styles.touchableCircle}>
-                              <Image source={srcRightBlue} style={{position:"absolute",right:0,margin:10}}></Image>
+                              
                               <View style={{padding:10}}>
                               <AnimatedCircularProgress
                               size={100}
@@ -159,7 +160,7 @@ class Lessons extends React.Component {
                               </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.touchableCircle}>
-                              <Image source={srcRightRed} style={{position:"absolute",right:0,margin:10}}></Image>
+                              
                               <View style={{padding:10}}>
                               <AnimatedCircularProgress
                               size={100}
@@ -184,7 +185,7 @@ class Lessons extends React.Component {
                           </View>
                           <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center',marginLeft:10,marginRight:10,marginTop:5}}>
                             <TouchableOpacity style={styles.touchableCircle}>
-                              <Image source={srcRightRed} style={{position:"absolute",right:0,margin:10}}></Image>
+                              
                               <View style={{padding:10}}>
                               <AnimatedCircularProgress
                               size={100}
@@ -207,7 +208,7 @@ class Lessons extends React.Component {
                               </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.touchableCircle}>
-                              <Image source={srcRightGreen} style={{position:"absolute",right:0,margin:10}}></Image>
+                              
                               <View style={{padding:10}}>
                               <AnimatedCircularProgress
                               size={100}
@@ -335,14 +336,14 @@ const styles = StyleSheet.create({
     height: 162
   }, 
   imageWelcome: {
-    width: 144,
-    height: 27,
+    width: moderateScale(144),
+    height: moderateScale(27),
     marginTop: 20,
     position: 'absolute',
     right: 30
   },
   textWelcome: {
-      fontSize: 8,
+      fontSize: 10,
       color: '#ffffff'
   },
   viewCollapse: {

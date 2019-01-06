@@ -1,9 +1,10 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, Dimensions, StatusBar } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, Dimensions, StatusBar , AsyncStorage} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Avatar } from 'react-native-elements';
-import {scale, verticalScale, moderateScale, customScaleAndroid, customScale} from '../utils/Scale'
+import {scale, verticalScale, moderateScale, customScaleAndroid, customScale} from '../utils/Scale';
+import SInfo from 'react-native-sensitive-info';
 import Modal from 'react-native-modalbox';
 var srcImage = require("../images/bgdashboard.png");
 var srcLogo = require("../images/logodashboard.png");
@@ -35,15 +36,47 @@ class Home extends React.Component {
     header: null
   };
 
-  state = {
-    popupMenu: false
-  };
-
   constructor(props) {
     super(props);
+    this.state = {
+      popupMenu: false,
+      teacher_photo: '',
+      teacher_name: '',
+      isLoadedImage: false
+    };
+    this.renderAvatar = this.renderAvatar.bind(this)
   }
 
   componentDidMount() {
+    AsyncStorage.getItem("user-name")
+      .then(res => {
+        if (res !== null) {
+          this.setState({teacher_name:res})
+        }
+      })
+      .catch(err => console.warn('gagal'));
+    
+      AsyncStorage.getItem("user-foto")
+        .then(res => {
+          if (res !== null) {
+            this.setState({teacher_photo:res,isLoadedImage:true})
+          }
+        })
+        .catch(err => console.warn('gagal'));
+  }
+    
+  renderAvatar() {
+    return (
+      <Avatar
+            width={moderateScale(95)}
+            height={moderateScale(95)}
+            rounded
+            source={{uri:this.state.teacher_photo,cache:'force-cache'}}
+            overlayContainerStyle={{backgroundColor: 'white'}}
+            onPress={() => console.log("Works!")}
+            // activeOpacity={0.8}
+        />
+    )
   }
 
   openPopupMenu() {
@@ -83,7 +116,7 @@ class Home extends React.Component {
           
                                   <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop: -20}}>
                                     <TouchableOpacity 
-                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('AddActivity')}}
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Activity')}}
                                     style={{marginRight:moderateScale(50),alignItems:'center',justifyContent:'center'}}>
                                       <Image source={srcActivity} style={{width:moderateScale(51.76),height:moderateScale(59.8),marginBottom:moderateScale(10)}}></Image>
                                       <Text style={{color:'#576076',fontSize:11}}>Activity</Text>
@@ -104,7 +137,7 @@ class Home extends React.Component {
                                       <Text style={{color:'#576076',fontSize:11}}>Food</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity 
-                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Other')}}
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('AddActivity')}}
                                     style={{marginLeft:moderateScale(15),alignItems:'center',justifyContent:'center'}}>
                                       <Image source={srcOther} style={{width:moderateScale(51.76),height:moderateScale(59.8)}}></Image>
                                       <Text style={{color:'#576076',fontSize:11}}>Other</Text>
@@ -146,21 +179,13 @@ class Home extends React.Component {
                       >
                         <View style={{alignItems:'center',justifyContent:'center',height:moderateScale(105)}}>
                           <View style={{alignItems:'center',height:moderateScale(95)}}>
-                            <Avatar
-                                width={moderateScale(95)}
-                                height={moderateScale(95)}
-                                rounded
-                                source={srcAvatar}
-                                overlayContainerStyle={{backgroundColor: 'white'}}
-                                onPress={() => console.log("Works!")}
-                                // activeOpacity={0.8}
-                            />
+                            {this.state.isLoadedImage==true ? this.renderAvatar() : console.log('a')}
                           </View>
                         </View>
                       </View>
                     </View>
                     <View style={{justifyContent: 'center',alignItems: 'center',marginBottom:moderateScale(5)}}>
-                      <Text style={{fontSize: 22,color: '#576076'}}>Miss Elsya</Text>
+                      <Text style={{fontSize: 22,color: '#576076'}}>{this.state.teacher_name}</Text>
                       <Text style={{fontSize: 12,color: '#576076'}}>Teacher</Text>
                     </View>
 
@@ -168,7 +193,7 @@ class Home extends React.Component {
 
                     <ImageBackground source={srcWelcome} style={{width: moderateScale(295),height: moderateScale(45),alignItems:'center',justifyContent:'center',marginBottom:moderateScale(10)}}>
                         <View style={{justifyContent: 'center',alignItems: 'center'}}>
-                          <Text style={styles.textWelcome}>Hello, Miss Elysa</Text>
+                          <Text style={styles.textWelcome}>Hello, {this.state.teacher_name}</Text>
                           <Text style={styles.textWelcome}>How Would you like to start your class today</Text>
                         </View>
                       </ImageBackground>
@@ -260,7 +285,7 @@ const styles = StyleSheet.create({
   },
   textWelcome: {
     color: '#ffffff',
-    fontSize: 11,
+    fontSize: 12,
     textAlignVertical:'center'
   }, 
   btnMenu: {

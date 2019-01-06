@@ -1,9 +1,10 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, FlatList, ActivityIndicator, StatusBar, Platform, Dimensions, TouchableOpacity } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, FlatList, ActivityIndicator, StatusBar, Platform, Dimensions, TouchableOpacity, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Student from './StudentList/Components/Student';
 var srcBg = require("../images/background.png");
 import api from "../networks/api";
+import * as request from "../networks/request";
 import constants from '../networks/constants';
 
 const width = Dimensions.get("window").width;
@@ -26,15 +27,18 @@ class Students extends React.Component {
 
   getKelas() {
     var response = [];
-    api({
-      method: 'get',
-      url: '/kelas/siswa'
-    }).then((resp) => {
-        resp.map((item)=>{
-          response.push(item);
+    AsyncStorage.getItem("auth-key")
+        .then(async (res) => {
+          if (res !== null) {
+            let resp = await request.studentKelas(res);
+            let respy = JSON.parse(resp._bodyText);
+            respy.map((item)=>{
+              response.push(item);
+            })
+            this.setState({data:response,loading:false})
+          }
         })
-        this.setState({data:response,loading:false})
-    })
+        .catch(err => this.setState({data:response,loading:false}))
   }
 
   componentDidMount() {

@@ -1,22 +1,47 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import api from "../../networks/api";
+import * as request from "../../networks/request";
+import constants from '../../networks/constants';
+import AutoHeightImage from 'react-native-auto-height-image';
+
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 class News extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        item1: [
-            { key:1, image: require("../../images/imageblog1.png"), desc: 'Quirky Discipline Rules That Work' },
-            { key:2, image: require("../../images/imageblog2.png"), desc: 'Pentingnya komunikasi yang baik pada anak usia dini.' },
-            { key:3, image: require("../../images/imageblog3.png"),  desc: 'Quirky Discipline Rules That Work' },
-        ],
-        item2: [
-            { key:4, image: require("../../images/imageblog2.png"), desc: 'Pentingnya komunikasi yang baik pada anak usia dini.' },
-            { key:5, image: require("../../images/imageblog3.png"),  desc: 'Quirky Discipline Rules That Work' },
-        ]
+        data1: [],
+        data2: [],
+        loading: true
     }
+    this._getNews();
+  }
+
+  _getNews() {
+    var arr_data_1 = [];
+    var arr_data_2 = [];
+    AsyncStorage.getItem("auth-key")
+        .then(async (res) => {
+          if (res !== null) {
+            let resp = await request.bulletinNews(res);
+            let respy = JSON.parse(resp._bodyText);
+            var numbers = 1;
+            respy.data.map((item)=>{
+                if(numbers%2!=0) {
+                    arr_data_1.push(item);
+                }else {
+                    arr_data_2.push(item);
+                }
+                numbers++;
+            })
+            this.setState({data1:arr_data_1,data2:arr_data_2,loading:false})
+          }
+        })
+        .catch(err => this.setState({data1:arr_data_1,data2:arr_data_2,loading:false}))
   }
 
   componentDidMount() {
@@ -24,47 +49,56 @@ class News extends React.Component {
 
   _render = ({item,index}) => {
       return(
-        <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',marginBottom:10,flex:1,
+        <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',marginBottom:15,flex:1,
         width: '100%',
         height: 'auto'}}>
             <TouchableOpacity
-            style={{borderRadius:15,width:'100%'}}
-                onPress={()=>this._navigate(item.key)}
+            style={{borderRadius:15,width:'100%',height:210}}
+                onPress={()=>this._navigate(item.id)}
             >
-                <View style={{borderRadius:15}}>
-                    <Image source={item.image} style={{borderRadius:15,width:'100%'}}/>
+                <View style={{borderRadius:15,width:'100%',height:200}}>
+                    <Image source={{uri:item.image}} style={{borderRadius:15,width:'100%',height:'100%',resizeMode:'cover'}} />
                 </View>
             </TouchableOpacity>
-            <Text style={{fontSize:10,color:'#464646',marginLeft:5}}>{item.desc}</Text>
+            <Text style={{fontSize:10,color:'#464646',marginLeft:5}}>{item.title}</Text>
         </View>
       );
   }
 
   _navigate(key) {
-    this.props.route.navigation.navigate("DetailBulletin");
+    this.props.route.navigation.navigate("DetailNews");
     }
 
   render() {
-      
-    return (
-      <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:"#FFFFFF"}}>
-      <View style={{flexDirection:'row',paddingVertical: 10,
-      paddingHorizontal: 5,flex:1}}>
-        <FlatList
-            style={{margin:3}}
-            data={ this.state.item1 }
-            renderItem={ this._render }
-            keyExtractor={(item, index) => item.key+""}
-            />
-        <FlatList
-            style={{margin:3}}
-            data={ this.state.item2 }
-            renderItem={ this._render }
-            keyExtractor={(item, index) => item.key+""}
-            />
-      </View>
-      </ScrollView>
-    );
+    if(this.state.loading) {
+        return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                  <ActivityIndicator size="large" color={constants.color.purple} />
+                </View>
+            )
+      }else {
+        return (
+            <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:"#FFFFFF"}}>
+                <View style={{flexDirection:'row',paddingVertical: 10,
+                paddingHorizontal: 5,flex:1,alignItems:'center',justifyContent:'center'}}>
+        
+                    <FlatList
+                        style={{margin:3}}
+                        data={ this.state.data1 }
+                        renderItem={ this._render }
+                        keyExtractor={(item, index) => item.id+""}
+                        />
+                        
+                    <FlatList
+                        style={{margin:3}}
+                        data={ this.state.data2 }
+                        renderItem={ this._render }
+                        keyExtractor={(item, index) => item.id+""}
+                        />
+        
+                </View>
+            </ScrollView>
+        );
+    }
   }
 }
 

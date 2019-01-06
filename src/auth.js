@@ -1,9 +1,9 @@
 import React from 'react';
 import { AsyncStorage } from "react-native";
 
-export const USER_KEY = "auth-demo-key";
+export const USER_KEY = "auth-key";
 
-export const onSignIn = () => AsyncStorage.setItem(USER_KEY, "true");
+export const onSignIn = (token) => AsyncStorage.setItem(USER_KEY, token);
 
 export const onSignOut = () => AsyncStorage.removeItem(USER_KEY);
 

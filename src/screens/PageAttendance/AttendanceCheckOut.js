@@ -1,40 +1,36 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList, ActivityIndicator, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import CheckOut from './Components/CheckOut';
 var srcBg = require("../../images/background.png");
+import api from "../../networks/api";
+import constants from '../../networks/constants';
 
 class AttendanceCheckOut extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-          {
-            id: 1,
-            title: "Kelas Badak", 
-            data: [
-                { avatar:'',name:'Lily Josh',id:1 },
-                { avatar:'',name:'Cecilla Robbie',id:2 },
-                { avatar:'',name:'Piere Paul',id:3 }
-            ]
-          },
-          {
-            id: 2,
-            title: "Kelas Mawar", 
-            data: [
-                { avatar:'',name:'Robert Pattinson',id:4 }
-            ]
-          },
-          {
-            id: 3,
-            title: "Kelas Melati", 
-            data: [
-                { avatar:'',name:'Carry Puth',id:5 }
-            ]
-          },
-      ]
+      data: [],
+      loading: true,
     };
+    this.getCheckOut();
+  }
+
+  getCheckOut() {
+    var response = [];
+    AsyncStorage.getItem("auth-key")
+        .then(async (res) => {
+          if (res !== null) {
+            let resp = await request.attendanceCheckOut(res);
+            let respy = JSON.parse(resp._bodyText);
+            respy.map((item)=>{
+              response.push(item);
+            })
+            this.setState({data:response,loading:false})
+          }
+        })
+        .catch(err => this.setState({data:response,loading:false}))
   }
 
   componentDidMount() {
@@ -44,20 +40,27 @@ class AttendanceCheckOut extends React.Component {
   _renderItem = ({item}) => <CheckOut item={item} navigation={this.props.navigation} />
 
   render() {
-    return (
-      <ScrollView contentContainerStyle={{flex: 1}} showsVerticalScrollIndicator={false}>
-           
-            <View style={styles.container}>
-                <ImageBackground style={styles.imageBackground} source={srcBg}>
-                    <FlatList
-                        data={this.state.data}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => item.id+""}
-                    />
-                </ImageBackground>
+    if(this.state.loading) {
+      return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+              <ActivityIndicator size="large" color={constants.color.purple} />
             </View>
-      </ScrollView>
-    );
+        )
+    }else {
+      return (
+        <ScrollView contentContainerStyle={{flex: 1}} showsVerticalScrollIndicator={false}>
+            
+              <View style={styles.container}>
+                  <ImageBackground style={styles.imageBackground} source={srcBg}>
+                      <FlatList
+                          data={this.state.data}
+                          renderItem={this._renderItem}
+                          keyExtractor={(item, index) => item.id+""}
+                      />
+                  </ImageBackground>
+              </View>
+        </ScrollView>
+      );
+  }
   }
 }
 

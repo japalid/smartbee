@@ -3,28 +3,102 @@ import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, FlatL
 import { ScrollView } from "react-native-gesture-handler";
 var srcBg = require("../../images/background.png");
 var srcStudent = require("../../images/studentexample.png");
-
+import RadioButton from "./Components/RadioButton";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-class Medical extends React.Component {
+class Activity extends React.Component {
     static navigationOptions = {
         header: null
       };
 
   constructor(props) {
     super(props);
-    this.state = {
-        
-    }
+    this.state = { 
+        radioItems: 
+        [
+            {
+                label: 'Play',
+                selected: false
+            }, 
+ 
+            {
+                label: 'Learn',
+                selected: true,
+            }
+        ], 
+        radioItemsJenis: 
+        [
+            {
+                label: 'Ate a lot',
+                selected: false
+            }, 
+ 
+            {
+                label: 'Ate enough',
+                selected: true,
+            },
+ 
+            {
+                label: 'Ate a little',
+                selected: false
+            },
+            
+            {
+                label: 'None',
+                selected: false
+            },
+            
+        ], 
+        selectedItem: '' }
   }
+
+  componentDidMount() {
+    this.state.radioItems.map(( item ) =>
+    {
+        if( item.selected == true )
+        {
+            this.setState({ selectedItem: item.label });
+        }
+    });
+  }
+
+  changeActiveRadioButton(index)
+    {
+        this.state.radioItems.map(( item ) =>
+        {
+            item.selected = false;
+        });
+ 
+        this.state.radioItems[index].selected = true;
+ 
+        this.setState({ radioItems: this.state.radioItems }, () =>
+        {
+            this.setState({ selectedItem: this.state.radioItems[index].label });
+        });
+    }
+
+    changeActiveRadioButtonJenis(index)
+    {
+        this.state.radioItemsJenis.map(( item ) =>
+        {
+            item.selected = false;
+        });
+ 
+        this.state.radioItemsJenis[index].selected = true;
+ 
+        this.setState({ radioItemsJenis: this.state.radioItemsJenis }, () =>
+        {
+            this.setState({ selectedItem: this.state.radioItemsJenis[index].label });
+        });
+    }
 
   render() {
     return (
         <View style={styles.container}>
 
-            <StatusBar backgroundColor="#6991F1" />
-            <View style={{flexDirection:'row',backgroundColor:'#6991F1',height:70 }}>
+            <StatusBar backgroundColor="#FEC77D" />
+            <View style={{flexDirection:'row',backgroundColor:'#FEC77D',height:70 }}>
                 <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
                     <View style={{marginLeft:15}}>
                     <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
@@ -33,7 +107,7 @@ class Medical extends React.Component {
                     </View>
                     <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
                     <View style={{margin:10}}>
-                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Medical</Text>
+                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Activity</Text>
                     </View>
                     </View>
                     <View style={{marginRight:15}}>
@@ -65,41 +139,34 @@ class Medical extends React.Component {
               <TouchableOpacity>
                   <Text style={{color:'#B28486'}}>Today : 08:31 am</Text>
               </TouchableOpacity>
-          </View>
-          <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
-              <View style={{flexDirection:'column',width:width/3 - 15}}>
-                <View style={{borderColor:'#F2AE7F',borderWidth:1,borderRadius:10,padding:15}}>
-                    <TextInput 
-                        style={{textAlign:'center'}}
-                    />
-                </View>
-                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{marginTop:5,color:'#2E313C'}}>Berat (kg)</Text>
-                </View>
-              </View>
-              
-              <View style={{flexDirection:'column',width:width/3 - 15}}>
-                <View style={{borderColor:'#83E1F5',borderWidth:1,borderRadius:10,padding:15}}>
-                    <TextInput
-                        style={{textAlign:'center'}}
-                    />
-                </View>
-                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{marginTop:5,alignItems:'center',color:'#2E313C'}}>Tinggi (cm)</Text>
-                </View>
-              </View>
+          </View>        
+          <View style={{marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
 
-              <View style={{flexDirection:'column',width:width/3 - 15}}>
-                <View style={{borderColor:'#A2D15A',borderWidth:1,borderRadius:10,padding:15}}>
+            <View style={{flexDirection:'row',alignItems:'center',borderWidth:1,borderColor:'#E2DEDF',borderRadius:20,backgroundColor:'#F8F8FA'}}>
+                {
+                    this.state.radioItems.map(( item, key ) =>
+                    (
+                        <RadioButton key = { key } button = { item } onClick = { this.changeActiveRadioButton.bind( this, key ) }/>
+                    ))
+                }
+            </View>
+
+            <View style={{flexDirection:'row',marginTop:10,marginBottom:15,justifyContent:'center'}}>
+                <View style={{flex:1,alignItems:'center'}}>
                     <TextInput 
-                        style={{textAlign:'center'}}
-                    />
+                    style={{
+                        borderColor:'#E0DEDE',
+                        borderWidth:1,
+                        textAlign:'center',
+                        backgroundColor: '#F8F8FA',
+                        padding: 10,
+                        color: '#878787',borderRadius:15,fontSize:13,marginLeft:15,marginRight:15,width:width-30}}
+                    placeholder={"Mood"}/>
                 </View>
-                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{marginTop:5,alignItems:'center',color:'#2E313C'}}>Suhu (c)</Text>
-                </View>
-              </View>
+            </View>
+
           </View>
+
           <View style={{flexDirection:'column',marginTop:10,borderBottomColor:'#707070',borderBottomWidth:0.3,marginBottom:10,paddingBottom:10,marginLeft:15,marginRight:15}}>
                 <ScrollView
                       horizontal={true}
@@ -135,12 +202,12 @@ class Medical extends React.Component {
         </ScrollView>
           <View style={{flexDirection:'row',position:'absolute',bottom:0,height:40,alignItems:'center',justifyContent:'center'}}>
               <TouchableOpacity
-                  style={{width:width/2,backgroundColor:'#6991F1',height:60,alignItems:'center',justifyContent:'center'}}
+                  style={{width:width/2,backgroundColor:'#FEC77D',height:60,alignItems:'center',justifyContent:'center'}}
               >
                   <Text style={{color:'#ffffff',alignItems:'center',fontSize:18}}>SAVE</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                  style={{width:width/2,backgroundColor:'#4676E5',height:60,alignItems:'center',justifyContent:'center'}}
+                  style={{width:width/2,backgroundColor:'#E9A750',height:60,alignItems:'center',justifyContent:'center'}}
               >
                   <Text style={{color:'#ffffff',alignItems:'center',fontSize:18}}>SEND</Text>
               </TouchableOpacity>
@@ -153,12 +220,29 @@ class Medical extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imageBackground: {
     width: '100%',
     height: '100%'
-  }
+  },
+  selectedTextHolder:
+    {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: 15,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+ 
+    selectedText:
+    {
+        fontSize: 18,
+        color: 'white'
+    }
 });
 
-export default Medical;
+export default Activity;

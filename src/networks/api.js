@@ -5,7 +5,10 @@ import constants from "./constants";
      * Create an Axios Client with defaults
      */
     const client = axios.create({
-        baseURL: constants.baseurl
+        baseURL: constants.baseurl,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 
     /**
