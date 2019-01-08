@@ -128,7 +128,7 @@ class Schedule extends React.Component {
                       height: 0
                     },
                   },
-                  selectedDayBackgroundColor: '#F00A6B',
+                  selectedDayBackgroundColor: 'white',
                   selectedDayTextColor: 'white',
                 }}
                   markingType={'custom'}
