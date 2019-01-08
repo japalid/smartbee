@@ -1,11 +1,12 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Modal, Platform, Dimensions, StatusBar } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Alert, Platform, Dimensions, StatusBar, AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-var srcAvatar = require("../../images/avatar.png");
 var srcCamera = require("../../images/icon/opencamerasettings.png")
 const width = Dimensions.get('window').width;
 const height = Dimensions.get("window").height;
-import { onSignOut } from "../../auth";
+import * as request from "../../networks/request";
+import constants from '../../networks/constants';
+import LoadingIndicator from '../../utils/LoadingIndicator';
 
 class Settings extends React.Component {
 
@@ -13,25 +14,79 @@ class Settings extends React.Component {
         header: null
       };
 
-  state = {
-    popupMenu: false
-  };
-
   constructor(props) {
     super(props);
+    this.state = {
+        popupMenu: false,
+        teacher_photo: '',
+        teacher_name: '',
+        isLoadedImage: false
+      };
+      this.renderAvatar = this.renderAvatar.bind(this)
   }
 
   componentDidMount() {
+    AsyncStorage.getItem("user-foto")
+    .then(res => {
+      if (res !== null) {
+        this.setState({teacher_photo:res,isLoadedImage:true})
+      }
+    })
+    .catch(err => console.log('fail'));
   }
 
   openPopupMenu(visible) {
     this.setState({popupMenu: visible});
   }
 
+  renderAvatar() {
+    return (
+        <ImageBackground source={{uri:this.state.teacher_photo,cache:'force-cache'}} style={styles.imageAvatar} imageStyle={{borderRadius:55}}>
+            <TouchableOpacity style={{bottom:0,position:'absolute',right:0}}>
+                <Image source={srcCamera} style={styles.camerabutton}/>
+            </TouchableOpacity>
+        </ImageBackground>
+    )
+  }
+
+  _signOut() {
+    this._loadingIndicator._show();
+    AsyncStorage.getItem('auth-key')
+    .then(async (res) => {
+        if(res!==null) {
+            let logout = await request.logout(res);
+            if(logout.status==200) {
+                AsyncStorage.removeItem('auth-key');
+                AsyncStorage.removeItem("user-id");
+                AsyncStorage.removeItem("user-name");
+                AsyncStorage.removeItem("user-foto");
+                AsyncStorage.removeItem("user-jk");
+                this._loadingIndicator._hide();
+                this.props.navigation.navigate("SignIn");
+            }else {
+                this._loadingIndicator._hide();
+                Alert.alert(
+                    'Ops..',
+                    'logout failed.',
+                    [
+                        {text: 'OK', onPress: () => {this._loadingIndicator._hide()}},
+                    ],
+                    { cancelable: false }
+                )
+            }
+        }
+    })
+    .catch(err => this._loadingIndicator._hide())
+
+  }
+
   render() {
       
     return (
         <View style={styles.container}>
+
+        <LoadingIndicator 
+              ref={(ref) => this._loadingIndicator = ref} />
             <StatusBar backgroundColor="#AD90CA" />
             <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70 }}>
                   <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
@@ -54,11 +109,7 @@ class Settings extends React.Component {
 
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:20}}>
                         <View style={styles.viewAvatar}>
-                            <ImageBackground source={srcAvatar} style={styles.imageAvatar}>
-                                <TouchableOpacity style={{bottom:0,position:'absolute',right:0}}>
-                                    <Image source={srcCamera} style={styles.camerabutton}/>
-                                </TouchableOpacity>
-                            </ImageBackground>
+                            {this.state.isLoadedImage==true ? this.renderAvatar() : console.log('a')}
                         </View>
                     </View>
 
@@ -110,7 +161,7 @@ class Settings extends React.Component {
 
                 <View style={{bottom:0,position: 'absolute',backgroundColor:'#EE534F',height:50,justifyContent:'center',alignItems:'center',flex:1,width:width}}>
                     <TouchableOpacity
-                    onPress={() => onSignOut().then(() => navigation.navigate("SignedOut"))}
+                    onPress={() => this._signOut()}
                     >
                         <Text style={{color:'#fff',fontSize:16}}>Logout</Text>
                     </TouchableOpacity>

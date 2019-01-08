@@ -52,6 +52,10 @@ import ScheduleNew from "./screens/PageSchedule/ScheduleNew";
 import Attendance from "./screens/PageAttendance/Attendance";
 import Bulletin from "./screens/PageBulletin/Bulletin";
 import DetailBulletin from "./screens/PageBulletin/DetailBulletin";
+import DetailBlog from "./screens/PageBulletin/DetailBlog";
+import DetailEvent from "./screens/PageBulletin/DetailEvent";
+import DetailNews from "./screens/PageBulletin/DetailNews";
+import DetailTips from "./screens/PageBulletin/DetailTips";
 import AddActivity from "./screens/PageOtherMenu/AddActivity";
 import PottyActivity from "./screens/PageOtherMenu/PottyActivity";
 import DraftActivity from "./screens/PageOtherMenu/DraftActivity";
@@ -459,6 +463,30 @@ export const SignedIn = createStackNavigator(
       screen: DetailBulletin,
       navigationOptions: {
         title: "Bulletin"
+      }
+    },
+    DetailBlog: {
+      screen: DetailBlog,
+      navigationOptions: {
+        title: "Blog"
+      }
+    },
+    DetailEvent: {
+      screen: DetailEvent,
+      navigationOptions: {
+        title: "Event"
+      }
+    },
+    DetailNews: {
+      screen: DetailNews,
+      navigationOptions: {
+        title: "News"
+      }
+    },
+    DetailTips: {
+      screen: DetailTips,
+      navigationOptions: {
+        title: "Tips"
       }
     },
     Activity: {

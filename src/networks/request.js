@@ -106,8 +106,110 @@ export async function bulletinNews(token){
   	});
 }
 
+export async function bulletinNewsId(token,id){
+    return fetch(constants.baseurl+'bulletin/news/'+id, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
 export async function bulletinBlog(token){
     return fetch(constants.baseurl+'bulletin/blog', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
+export async function bulletinBlogId(token,id){
+    return fetch(constants.baseurl+'bulletin/blog/'+id, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
+export async function bulletinEvent(token){
+    return fetch(constants.baseurl+'bulletin/event', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
+export async function bulletinEventId(token,id){
+    return fetch(constants.baseurl+'bulletin/event/'+id, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
+export async function bulletinTips(token){
+    return fetch(constants.baseurl+'bulletin/tips', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+}
+
+export async function bulletinTipsId(token,id){
+    return fetch(constants.baseurl+'bulletin/tips/'+id, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -136,6 +238,23 @@ export async function userDetail (token){
     }).catch((err) => {
         throw err;
     })
+}
+
+export async function logout(token){
+    return fetch(constants.baseurl+'user/logout', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
 }
 
 const urlEncoded = (formData)=>{

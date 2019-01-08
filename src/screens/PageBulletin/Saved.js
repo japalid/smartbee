@@ -8,13 +8,8 @@ class Saved extends React.Component {
     super(props);
     this.state = {
         item1: [
-            { key:1, image: require("../../images/imageblog1.png"), desc: 'Quirky Discipline Rules That Work' },
-            { key:2, image: require("../../images/imageblog2.png"), desc: 'Pentingnya komunikasi yang baik pada anak usia dini.' },
-            { key:3, image: require("../../images/imageblog3.png"),  desc: 'Quirky Discipline Rules That Work' },
         ],
         item2: [
-            { key:4, image: require("../../images/imageblog2.png"), desc: 'Pentingnya komunikasi yang baik pada anak usia dini.' },
-            { key:5, image: require("../../images/imageblog3.png"),  desc: 'Quirky Discipline Rules That Work' },
         ]
     }
   }

@@ -80,7 +80,14 @@ _login = async () =>{
             }
           }else {
             this._loadingIndicator._hide();
-            console.warn('gaggal');
+            Alert.alert(
+              'Ops..',
+              'email or password is incorrect',
+              [
+                  {text: 'OK', onPress: () => {this.setState({ inValidEmail: true })}},
+              ],
+              { cancelable: false }
+          )
           }
 
 

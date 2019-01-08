@@ -66,7 +66,7 @@ class News extends React.Component {
   }
 
   _navigate(key) {
-    this.props.route.navigation.navigate("DetailNews");
+    this.props.route.navigation.navigate("DetailNews",{id:key});
     }
 
   render() {
