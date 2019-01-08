@@ -258,7 +258,7 @@ class Lessons extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity 
                       onPress={()=>this.props.navigation.navigate("LessonsMilestone",{tab: 1})}
-                    style={styles.btnMenu}>
+                    style={[styles.btnMenu,{marginTop: 15}]}>
                       <View style={styles.viewInsideMenu}>
                         <Image source={srcSelf}></Image>
                         <View style={styles.viewTextMenu}>

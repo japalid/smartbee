@@ -16,7 +16,7 @@ class StudentItems extends React.Component {
 
     _renderItem = ({item}) => (
         <TouchableOpacity 
-            onPress={()=>this.props.navigation.navigate("DailyReport")}
+            onPress={()=>this.props.navigation.navigate("DailyReport",{id:item.id})}
         >
             <View style={{flexDirection:'row',borderBottomColor:"#707070",borderBottomWidth:0.1,alignItems:'center',marginTop:15,paddingBottom:10}}>
                 <Image source={{uri:item.foto}} style={{width:50,height:50,marginLeft:30,borderRadius:25}}></Image>

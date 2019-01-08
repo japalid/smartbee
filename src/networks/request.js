@@ -225,6 +225,31 @@ export async function bulletinTipsId(token,id){
   	});
 }
 
+
+/*-- Activity --*/
+export async function activity_daily(token, siswa, date, language){  
+
+	return fetch(constants.baseurl+'activity/daily', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        },
+        body: urlEncoded({          	
+        	siswa: siswa,
+            date: date,
+            language
+        })
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
 export async function userDetail (token){
     return fetch(constants.baseurl+'user', {
         method: 'GET',
