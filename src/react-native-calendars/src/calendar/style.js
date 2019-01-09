@@ -9,6 +9,9 @@ export default function getStyle(theme={}) {
     container: {
       paddingLeft: 5,
       paddingRight: 5,
+      paddingBottom: 10,
+      borderBottomWidth:2,
+      borderBottomColor:'#707070',
       backgroundColor: appStyle.calendarBackground
     },
     monthView: {

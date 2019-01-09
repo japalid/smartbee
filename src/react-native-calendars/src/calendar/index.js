@@ -226,6 +226,9 @@ class Calendar extends Component {
 
   renderWeek(days, id) {
     const week = [];
+    
+    console.log(days);
+    
     days.forEach((day, id2) => {
       week.push(this.renderDay(day, id2));
     }, this);
@@ -233,6 +236,7 @@ class Calendar extends Component {
     if (this.props.showWeekNumbers) {
       week.unshift(this.renderWeekNumber(days[days.length - 1].getWeek()));
     }
+    
 
     return (<View style={this.style.week} key={id}>{week}</View>);
   }
