@@ -27,6 +27,7 @@ class DailyReport extends React.Component {
         loading: true,
         date: new Date(),
         data1: [],
+        activity: [],
         data: [
             {
                 id: 1,
@@ -94,13 +95,15 @@ class DailyReport extends React.Component {
             if(month<10) {
                 month = "0" + month;
             }
-
-        let resp = await request.activity_daily(res,this.props.navigation.getParam("id"),year+"-"+day+"-"+month,"id");
+        // let resp = await request.activity_daily(res,this.props.navigation.getParam("id"),year+"-"+month+"-"+day,"id");
+        let resp = await request.activity_daily(res,this.props.navigation.getParam("id"),"2018-05-27");
         let respy = JSON.parse(resp._bodyText);
-        this.setState({data1:respy,loading:false})
+        const re = [];
+        re.push(respy.activity)
+        this.setState({data1:respy,activity:re,loading:false})
         }
     })
-    .catch(err => this.setState({data1:arr_data_1,data2:arr_data_2,loading:false}))
+    .catch(err => this.setState({loading:false}))
   }
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -117,10 +120,6 @@ class DailyReport extends React.Component {
     this.setState({popupMenu: visible});
   }
 
-  _navigateFood() {
-    
-  }
-
   _retDayName() {
     var day = this.state.date.getDay();
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -135,12 +134,6 @@ class DailyReport extends React.Component {
   _renderItem = ({item}) => <DailyReportItems item={item} navigation={this.props.navigation} />
 
   render() {
-    if(this.state.loading) {
-        return( <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                  <ActivityIndicator size="large" color={constants.color.purple} />
-                </View>
-            )
-        }else {
     return (
         <View style={styles.container}>
         
@@ -167,6 +160,11 @@ class DailyReport extends React.Component {
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
+            {
+                (this.state.loading)?
+                <View style={{flex:1,justifyContent:'center',alignItems:'center',height:height}}>
+                  <ActivityIndicator size="large" color={constants.color.purple} />
+                </View>:
             <View>
                 <View style={{height:46,backgroundColor:'#8865A9',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                     <TouchableOpacity
@@ -191,7 +189,7 @@ class DailyReport extends React.Component {
                     <View style={{marginTop:20,marginLeft:25}}>
                         <FlatList
                             scrollEnabled={false}
-                            data={this.state.data}
+                            data={this.state.activity}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => item.id+""}
                         />    
@@ -206,12 +204,12 @@ class DailyReport extends React.Component {
                 />
                 
             </View>
+            }
         </ScrollView>
         <FAB navigation={this.props.navigation} />
         </View>
     );
     }
-  }
 }
 
 const styles = StyleSheet.create({

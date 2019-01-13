@@ -13,12 +13,32 @@ class DailyReportItems extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            loading : true,
+            data : []
+        }
+        this._generateList(this.props.item);
+    }
+
+    _generateList(items) {
+        const d = []
+        Object.keys(items).map((key,index) => {
+            if(items[key].length > 0) {
+                items[key].map((val)=>{
+                    d.push({
+                        date: val.date,
+                        detail: val.detail
+                    })
+                })
+            }
+        })
+        // console.warn(d)
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={{flexDirection:'row'}}>
+                {/* <View style={{flexDirection:'row'}}>
                     <Image source={srcIconFood} style={{width:moderateScale(19),height:moderateScale(19)}} />
                     <View style={{marginLeft:25}}>
                         <Text style={{color:'#3D4356',fontSize:15,marginBottom:10}}>{this.props.item.title}</Text>
@@ -34,7 +54,7 @@ class DailyReportItems extends React.Component {
                         <Text style={{color:"#3D4356",fontSize:15,marginBottom:10}}>{this.props.item.description}</Text>
                         <Text style={{color:'#3D4356',fontSize:11}}>{this.props.item.date}</Text>
                     </View>
-                </View>
+                </View> */}
             </View>
         );
     }

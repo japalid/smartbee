@@ -18,15 +18,14 @@ class Milestone extends React.Component {
   }
 
   _detail() {
-    this.props.navigation.navigate("LessonsMilestoneDetail")
+    this.props.navigation.navigate("LessonsMilestoneDetail",{id:this.props.id})
   }
 
   render() {
     return (
         <View style={{height:250,width:180,marginRight:10}}
         >
-            
-            <ImageBackground style={{width:'100%',height:250}} imageStyle={{ borderRadius:10 }} source={this.props.imageUri}>
+            <ImageBackground style={{width:180,height:250}} imageStyle={{ borderRadius:10 }} source={{uri:this.props.imageUri}}>
             <View style={{width:'100%',backgroundColor:'#FFBE69',height:30,borderTopLeftRadius:10,borderTopRightRadius:10}}>
                 <View style={{justifyContent:'center',alignItems:'center'}}>
                 <Text style={{fontSize:9,color:'#FFFFFF',textAlign:'center',marginTop:8}}>HAVE YOU REACHED THIS MILESTONE</Text>
@@ -42,8 +41,7 @@ class Milestone extends React.Component {
                           <Text style={{fontSize:9,color:'#FFFFFF',marginLeft:65,position:'absolute',top:0,marginTop:8}}>{this.props.name}</Text>
                       </View>
                       <TouchableOpacity onPress={()=>this._detail()}>
-
-                      <Image style={{width:60,height:60}} source={this.props.imageStatus}/>
+                        <Image style={{width:60,height:60}} source={this.props.imageStatus}/>
                       </TouchableOpacity>
                   </View>
                 </View>

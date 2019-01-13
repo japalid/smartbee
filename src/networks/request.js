@@ -232,14 +232,89 @@ export async function activity_daily(token, siswa, date, language){
 	return fetch(constants.baseurl+'activity/daily', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer '+token
         },
         body: urlEncoded({          	
         	siswa: siswa,
             date: date,
-            language
+            language: language
+        })
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+/*-- Lesson --*/
+export async function lesson_category(token){  
+	return fetch(constants.baseurl+'lesson/categories', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function lesson_by_id(token, id, language){
+	return fetch(constants.baseurl+'lesson/'+id+'?language='+language, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function lesson_by_category(token, id, language){
+	return fetch(constants.baseurl+'lesson/categories/'+id+'?language='+language, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function lesson_list(token, id, page, idclass, language){  
+
+	return fetch(constants.baseurl+'lesson', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        },
+        body: urlEncoded({          	
+        	id: id,
+            page: page,
+            class: idclass,
+            language: language
         })
     })
     .then((response) => {

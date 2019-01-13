@@ -1,8 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions, StatusBar, Platform, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, Text, Dimensions, StatusBar, Platform, TouchableOpacity, Image, AsyncStorage, ActivityIndicator } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TabView,TabBar,SceneMap } from 'react-native-tab-view';
+import * as request from "../networks/request";
+import constants from "../networks/constants";
 import Kindness from './LessonsMilestoneList/Kindness';
+import LessonPage from './LessonsMilestoneList/LessonPage';
 import SelfConfidence from './LessonsMilestoneList/SelfConfidence';
 import Grit from './LessonsMilestoneList/Grit';
 import ProblemSolving from './LessonsMilestoneList/ProblemSolving';
@@ -27,15 +30,47 @@ class LessonsMilestone extends React.Component {
     super(props);
     this.state = {
         index: this.props.navigation.getParam('tab',0),
-        routes: [
-            { key: 'kindness', title: 'Kindness', navigation: this.props.navigation },
-            { key: 'selfconfidence', title: 'Self Confidence', navigation: this.props.navigation },
-            { key: 'grit', title: 'Grit', navigation: this.props.navigation },
-            { key: 'problemsolving', title: 'Problem Solving', navigation: this.props.navigation },
-            { key: 'creativity', title: 'Creativity', navigation: this.props.navigation },
-            { key: 'discipline', title: 'Discipline', navigation: this.props.navigation }
-        ]
+        // routes: [
+        //     { key: 'kindness', title: 'Kindness', navigation: this.props.navigation },
+        //     { key: 'selfconfidence', title: 'Self Confidence', navigation: this.props.navigation },
+        //     { key: 'grit', title: 'Grit', navigation: this.props.navigation },
+        //     { key: 'problemsolving', title: 'Problem Solving', navigation: this.props.navigation },
+        //     { key: 'creativity', title: 'Creativity', navigation: this.props.navigation },
+        //     { key: 'discipline', title: 'Discipline', navigation: this.props.navigation }
+        // ],
+        routes: [],
+        loading: true,
+        scenes: {}
     }
+    this._getLessonCategory();
+  }
+
+  _getLessonCategory() {
+    var response = [];
+    AsyncStorage.getItem("auth-key")
+    .then(async (res) => {
+        if (res !== null) {
+        let resp = await request.lesson_category(res);
+        let respy = JSON.parse(resp._bodyText);
+        const _routes = [];
+        respy.map((item)=>{
+          _routes.push({
+            key: item.id+"",
+            title: item.category,
+          })
+          response.push(item);
+        })
+        let scenes = {};
+        respy.forEach(element => {
+          const FR = () => (
+            <LessonPage navigation={this.props.navigation} data={element} />
+          )
+            scenes[element.id] = FR
+        });
+        this.setState({loading:false,routes:_routes,scenes:scenes})
+        }
+    })
+    .catch(err => this.setState({loading:false}))
   }
 
   componentDidMount() {
@@ -93,14 +128,22 @@ class LessonsMilestone extends React.Component {
                   </View>
               </View>
 
-            <TabView
+          {
+            this.state.loading ? (
+              <View style={{flex:1,alignItems:'center'}}>
+                  <ActivityIndicator size="large" color={constants.color.purple} />
+                </View>
+            ):(
+              <TabView
                 style={[styles.container, this.props.style]}
                 navigationState={this.state}
-                renderScene={this._renderScene}
+                renderScene={SceneMap(this.state.scenes)}
                 renderTabBar={this._renderTabBar}
                 onIndexChange={this._handleIndexChange}
                 initialLayout={initialLayout}
-            />
+              />
+            )
+          }
         </View>
     );
   }

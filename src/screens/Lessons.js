@@ -1,7 +1,9 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, Dimensions, UIManager, StatusBar } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, Dimensions, UIManager, StatusBar, ActivityIndicator, AsyncStorage, FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import * as request from "../networks/request";
+import constants from "../networks/constants";
 var srcImage = require("../images/bannerlessons.png");
 var srcWelcome = require("../images/panelwelcomelessons.png");
 var srcOpenResult = require("../images/icon/openresulticonlessons.png");
@@ -41,8 +43,27 @@ class Lessons extends React.Component {
       expand: false,
       buttonText : true,
       showMainMenu : true,
-      percentage: 66
+      percentage: 66,
+      loading: true,
+      data: []
     };
+    this._getLessonCategory();
+  }
+
+  _getLessonCategory() {
+    var response = [];
+    AsyncStorage.getItem("auth-key")
+    .then(async (res) => {
+        if (res !== null) {
+        let resp = await request.lesson_category(res);
+        let respy = JSON.parse(resp._bodyText);
+        respy.map((item)=>{
+          response.push(item);
+        })
+        this.setState({loading:false,data:response})
+        }
+    })
+    .catch(err => this.setState({loading:false}))
   }
 
   async componentDidMount() {
@@ -247,7 +268,32 @@ class Lessons extends React.Component {
                       flexGrow: 1,
                       alignItems: 'center'
                   }}>
-                  <View style={styles.viewSubMenu}>
+
+                  { this.state.loading ? ( <View style={{flex:1,alignItems:'center'}}>
+                  <ActivityIndicator size="large" color={constants.color.purple} />
+                </View> ):
+                  (
+                  <View>
+
+                    <FlatList 
+                      keyExtractor={(item, index) => item.id+""}
+                      data={this.state.data}
+                      renderItem={({item,index})=>
+                        <View style={styles.viewSubMenu}>
+                          <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate("LessonsMilestone",{tab: index})}
+                          style={[styles.btnMenu,{marginTop: 15}]}>
+                            <View style={styles.viewInsideMenu}>
+                              <Image source={{uri:item.image}}></Image>
+                              <Text style={styles.textMenu}>{item.category}</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      }
+                      numColumns={2}
+                    />
+
+                  {/* <View style={styles.viewSubMenu}>
                     <TouchableOpacity
                       onPress={()=>this.props.navigation.navigate("LessonsMilestone",{tab: 0})}
                     style={[styles.btnMenu,{marginTop: 15}]}>
@@ -308,7 +354,10 @@ class Lessons extends React.Component {
                         </View>
                       </View>
                     </TouchableOpacity>
+                  </View> */}
                   </View>
+                  )
+                  }
                   </ScrollView>
                 </View>
                                 
