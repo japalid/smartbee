@@ -2,7 +2,7 @@ import React from "react";
 import { View, ImageBackground, StyleSheet, Image, Text, Platform, TouchableOpacity, ActivityIndicator, Dimensions } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 import { ScrollView, FlatList } from "react-native-gesture-handler";
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda } from "../../react-native-calendars";
 import api from "../../networks/api";
 import StatusBarDefault from "../../utils/StatusBarDefault";
 import constants from '../../networks/constants';
@@ -128,7 +128,7 @@ class Schedule extends React.Component {
                       height: 0
                     },
                   },
-                  selectedDayBackgroundColor: '#F00A6B',
+                  selectedDayBackgroundColor: 'white',
                   selectedDayTextColor: 'white',
                 }}
                   markingType={'custom'}
