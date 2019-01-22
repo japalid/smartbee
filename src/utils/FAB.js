@@ -25,6 +25,52 @@ class FAB extends React.Component {
     this.setState({popupMenu: visible});
   }
 
+  _renderIcon = (title) => {
+
+    if(title == "Food") {
+        return(<Image source={srcFood} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Activity") {
+        return(<Image source={srcActivity} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Potty") {
+        return(<Image source={srcPotty} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Incident") {
+        return(<Image source={srcIncident} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Medical") {
+        return(<Image source={srcPotty} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Nap") {
+        return(<Image source={srcNap} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Other") {
+        return(<Image source={srcOther} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Milk") {
+        return(<Image source={srcMilk} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }else if(title == "Academic") {
+        return(<Image source={srcAcademic} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />)
+    }
+}
+
+toReport(title,item) {
+    if(title == "Food") {
+        this.props.navigation.navigate("FoodReport",{report:item,id:this.props.id})
+    }else if(title == "Activity") {
+        this.props.navigation.navigate("ActivityReport",{report:item,id:this.props.id})
+    }else if(title == "Potty") {
+        this.props.navigation.navigate("PottyReport",{report:item,id:this.props.id})
+    }else if(title == "Incident") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }else if(title == "Medical") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }else if(title == "Nap") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }else if(title == "Other") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }else if(title == "Milk") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }else if(title == "Academic") {
+        this.props.navigation.navigate("StudentReport",{report:item,id:this.props.id})
+    }
+    
+}
+
   render() {
     return (
       <View>
@@ -49,15 +95,23 @@ class FAB extends React.Component {
                         
                         <View style={{bottom:0,right:0,position:'absolute',marginBottom:moderateScale(68),marginRight:moderateScale(25)}}>
                             <View style={{flexDirection:'column',paddingTop:moderateScale(15)}}>
-                                <View style={{flexDirection:'row',alignItems:'center',marginTop:moderateScale(5)}}>
-                                    <View style={{justifyContent:'center',width:moderateScale(110),height:moderateScale(35),backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',shadowColor:'#000',shadowOffset:{  width: 2,  height: 4,  }, elevation:8,shadowOpacity: 1,shadowRadius:10}}>
-                                        <Text style={{color:'#2E313C',fontSize:13}}>Food</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                    onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("FoodReport"); }}>
-                                    <Image source={srcFood} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />
-                                    </TouchableOpacity>
-                                </View>
+                                {
+                                    this.props.item.map((item)=>(
+
+                                        item.data!="Mood"?
+                                        (<View key={item.id} style={{flexDirection:'row',alignItems:'center',marginTop:moderateScale(5)}}>
+                                            <View style={{justifyContent:'center',width:moderateScale(110),height:moderateScale(35),backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',shadowColor:'#000',shadowOffset:{  width: 2,  height: 4,  }, elevation:8,shadowOpacity: 1,shadowRadius:10}}>
+                                                <Text style={{color:'#2E313C',fontSize:13}}>{item.data}</Text>
+                                            </View>
+                                            <TouchableOpacity
+                                            onPress={ ()=> {this.setState({popupMenu:false}); this.toReport(item.data,item); }}>
+                                            {this._renderIcon(item.data)}   
+                                            </TouchableOpacity>
+                                        </View>)
+                                        :(<View style={{display:"none"}}></View>)
+                                    ))
+                                }
+{/*                                 
                                 <View style={{flexDirection:'row',alignItems:'center',marginTop:moderateScale(5)}}>
                                     <View style={{justifyContent:'center',width:moderateScale(110),height:moderateScale(35),backgroundColor:'#FFFFFF',borderRadius:5,alignItems:'center',shadowColor:'#000',shadowOffset:{  width: 1,  height: 4,   }, elevation:8,shadowOpacity: 1,shadowRadius:10}}>
                                         <Text style={{color:'#2E313C',fontSize:13}}>Activity</Text>
@@ -129,7 +183,7 @@ class FAB extends React.Component {
                                     onPress={ ()=> {this.setState({popupMenu:false}); this.props.navigation.navigate("OtherReport"); }}>
                                         <Image source={srcOther} style={{width:moderateScale(39),height:moderateScale(45),marginLeft:moderateScale(10)}} />
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                             </View>
                         </View>
                         

@@ -10,6 +10,8 @@ var srcBg = require("../images/background.png");
 var srcLeft = require("../images/icon/dailyreportleftarrow.png");
 var srcRight = require("../images/icon/dailyreportrightarrow.png");
 var srcAvatar = require("../images/studentexample.png");
+import axios from "axios";
+import qs from 'qs';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -28,37 +30,14 @@ class DailyReport extends React.Component {
         date: new Date(),
         data1: [],
         activity: [],
-        data: [
-            {
-                id: 1,
-                title: "Breakfast",
-                description: "Ate a lot",
-                icon: "",
-                image: "",
-                date: "Mon, 01 Jan, 08.11 AM"
-            },
-            {
-                id: 2,
-                title: "Activity",
-                description: "Learn : Writing a poetry",
-                icon: "",
-                image: "",
-                date: "Mon, 01 Jan, 08.11 AM"
-            },
-            {
-                id: 3,
-                title: "Nap",
-                description: "From : 09.25 am To : 09.57 am",
-                icon: "",
-                image: "",
-                date: "Mon, 01 Jan, 08.11 AM"
-            },
-        ]
+        dataActivity: []
     };
-    this._getDaily();
+   
   }
 
   componentDidMount() {
+    this._getDailyAxios();
+    this._getCategoryActivity();
   }
 
   _addOneDay() {
@@ -67,7 +46,7 @@ class DailyReport extends React.Component {
     var newdate = new Date(_date);
     newdate.setDate(newdate.getDate() + 1);
     this.setState({date:newdate})
-    this._getDaily();
+    this._getDailyAxios();
   }
 
   _minOneDay() {
@@ -76,7 +55,7 @@ class DailyReport extends React.Component {
     var newdate = new Date(_date);
     newdate.setDate(newdate.getDate() - 1);
     this.setState({date:newdate})
-    this._getDaily();
+    this._getDailyAxios();
   }
 
   _getDaily() {
@@ -106,6 +85,58 @@ class DailyReport extends React.Component {
     .catch(err => this.setState({loading:false}))
   }
 
+  _getCategoryActivity() {
+    AsyncStorage.getItem("auth-key")
+    .then(async (res) => {
+        if (res !== null) {
+            let resp = await request.activity_category(res);
+            let respy = JSON.parse(resp._bodyText);
+            this.setState({dataActivity:respy,loading:false})
+        }
+    })
+    .catch(err => this.setState({loading:false}))
+  }
+
+  _getDailyAxios() {
+    AsyncStorage.getItem("auth-key")
+    .then(async (res) => {
+        if (res !== null) {
+            var _date = this.state.date;
+            var year = _date.getFullYear();
+            var month = _date.getMonth()+1;
+            var day = _date.getDate();
+
+            if(day<10) {
+                day = "0" + day;
+            }
+            if(month<10) {
+                month = "0" + month;
+            }
+            const config = {
+                headers: {
+                    'Authorization': "Bearer "+res,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            const requestBody = qs.stringify({
+                siswa: this.props.navigation.getParam("id"),
+                date: "2018-05-27",
+                language: "id"
+            })
+            axios.post(constants.baseurl+"activity/daily",requestBody,config)
+                .then((res)=>{
+                    const re = [];
+                    re.push(res.data.activity);
+                    this.setState({data1:res.data,activity:re,loading:false})
+                })
+                .catch((err)=>{
+                    this.setState({loading:false})
+                })
+        }
+    })
+    .catch(err => this.setState({loading:false}))
+  }
+
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
  
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
@@ -113,7 +144,7 @@ class DailyReport extends React.Component {
   _handleDatePicked = (date) => {
     this.setState({date:date,loading:true})
     this._hideDateTimePicker();
-    this._getDaily();
+    this._getDailyAxios();
   };
   
   openPopupMenu(visible) {
@@ -206,7 +237,7 @@ class DailyReport extends React.Component {
             </View>
             }
         </ScrollView>
-        <FAB navigation={this.props.navigation} />
+        <FAB navigation={this.props.navigation} item={this.state.dataActivity} id={this.state.data1} />
         </View>
     );
     }

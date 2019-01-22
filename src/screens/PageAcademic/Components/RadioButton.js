@@ -3,9 +3,8 @@ import { Text, View, TouchableOpacity, StyleSheet, Platform } from 'react-native
  
 class RadioButton extends React.Component
 {
-    constructor()
-    {
-        super();
+    constructor(props) {
+        super(props);
     }
  
     render()

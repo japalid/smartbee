@@ -122,7 +122,7 @@ class Home extends React.Component {
                                       <Text style={{color:'#576076',fontSize:11}}>Activity</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity 
-                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('Academic')}}
+                                      onPress={()=>{this.openPopupMenu(!this.state.popupMenu);this.props.navigation.navigate('StudentGet',{to:'Academic'})}}
                                     style={{marginLeft:moderateScale(50),alignItems:'center',justifyContent:'center'}}>
                                       <Image source={srcAcademic} style={{width:moderateScale(51.76),height:moderateScale(59.8),marginBottom:moderateScale(10)}}></Image>
                                       <Text style={{color:'#576076',fontSize:11}}>Academic</Text>

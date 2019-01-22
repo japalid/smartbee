@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, LayoutAnimation, FlatList,Modal, StatusBar, Dimensions, AsyncStorage, ActivityIndicator } from "react-native";
+import { View, ImageBackground, StyleSheet, Image, Text, TouchableOpacity, Platform, AsyncStorage, Dimensions,StatusBar, ActivityIndicator, FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import DailyReportItems from "./DailyReportList/Components/DailyReportItems";
@@ -12,8 +12,8 @@ var srcFoodExample = require("../images/examplefood.png");
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
-class FoodReportFilterResult extends React.Component {
+ 
+class StudentReport extends React.Component {
 
   static navigationOptions = () => ({
     header: null
@@ -22,17 +22,43 @@ class FoodReportFilterResult extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+        date: new Date(),
         popupMenu: false,
         isDateTimePickerVisible: false,
+        data: [
+            {
+                id: 1,
+                title: "Breakfast",
+                description: "Ate a lot",
+                icon: "",
+                image: "",
+                date: "Mon, 01 Jan, 08.11 AM"
+            },
+            {
+                id: 2,
+                title: "Activity",
+                description: "Learn : Writing a poetry",
+                icon: "",
+                image: "",
+                date: "Mon, 01 Jan, 08.11 AM"
+            },
+            {
+                id: 3,
+                title: "Nap",
+                description: "From : 09.25 am To : 09.57 am",
+                icon: "",
+                image: "",
+                date: "Mon, 01 Jan, 08.11 AM"
+            },
+        ],
         loading: false,
         dataActivity: [],
         dataStudent: [],
         dataCategory: [],
         dataActivityDetail: [],
-        activity: [],
-        date1: new Date(),
-        date2: new Date()
+        activity: []
     };
+    
   }
 
   componentDidMount() {
@@ -41,22 +67,8 @@ class FoodReportFilterResult extends React.Component {
     this._getActivityDetail();
   }
 
-  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
- 
-  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
- 
-  _handleDatePicked = (date) => {
-    this._hideDateTimePicker();
-  };
-  
-  openPopupMenu(visible) {
-    this.setState({popupMenu: visible});
-  }
-
-  _renderItem = ({item}) => <DailyReportItems item={item} navigation={this.props.navigation} />
-
   _renderDetail() {
-    this.setState({dataStudent:this.props.navigation.getParam("id"),dataCategory:this.props.navigation.getParam("report"),date1:this.props.navigation.getParam("date_from"),date2:this.props.navigation.getParam("date_to")})
+        this.setState({dataStudent:this.props.navigation.getParam("id"),dataCategory:this.props.navigation.getParam("report")})
   }
 
   _getCategoryActivity() {
@@ -75,49 +87,27 @@ class FoodReportFilterResult extends React.Component {
     AsyncStorage.getItem("auth-key")
     .then(async (res) => {
         if (res !== null) {
-            var _date1 = this.state.date1;
-            var year1 = _date1.getFullYear();
-            var month1 = _date1.getMonth()+1;
-            var day1 = _date1.getDate();
-
-            if(day1<10) {
-                day1 = "0" + day1;
-            }
-            if(month1<10) {
-                month1 = "0" + month1;
-            }
-
-            var _date2 = this.state.date2;
-            var year2 = _date2.getFullYear();
-            var month2 = _date2.getMonth()+1;
-            var day2 = _date2.getDate();
-
-            if(day2<10) {
-                day2 = "0" + day2;
-            }
-            if(month2<10) {
-                month2 = "0" + month2;
-            }
-            let resp = await request.activity_report_range(res,this.state.dataStudent.id,this.state.dataCategory.id,year1+"-"+month1+"-"+day1,year2+"-"+month2+"-"+day2,"id");
+            let resp = await request.activity_report(res,this.state.dataStudent.id,this.state.dataCategory.id,"2018-05-27","id");
             let respy = JSON.parse(resp._bodyText);
             console.warn(respy)
             const re = [];
             re.push(respy.activity);
-            console.warn(re)
             this.setState({dataActivityDetail:respy,activity:re,loading:false})
         }
     })
     .catch(err => this.setState({loading:false}))
   }
 
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+ 
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+ 
+  _handleDatePicked = (date) => {
+    this._hideDateTimePicker();
+  };
+  
   _retDayName() {
-    var day = this.state.date1.getDay();
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return days[day];
-  }
-
-  _retDayName2() {
-    var day = this.state.date2.getDay();
+    var day = this.state.date.getDay();
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return days[day];
   }
@@ -127,10 +117,17 @@ class FoodReportFilterResult extends React.Component {
       return months[month];
   }
 
+  openPopupMenu(visible) {
+    this.setState({popupMenu: visible});
+  }
+
+  _renderItem = ({item}) => <DailyReportItems item={item} navigation={this.props.navigation} />
+
   render() {
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor="#AD90CA" />
+
+        <StatusBar backgroundColor="#AD90CA" />
             <View style={{flexDirection:'row',backgroundColor:'#AD90CA',height:70 }}>
                 <View style={{marginTop: (Platform.OS) == 'ios' ? 30 : 0,alignItems:'center',justifyContent:'space-between',flexDirection:'row',width:width}}>
                     <View style={{marginLeft:15}}>
@@ -140,7 +137,7 @@ class FoodReportFilterResult extends React.Component {
                     </View>
                     <View style={{alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
                     <View style={{margin:10}}>
-                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>Food</Text>
+                        <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>{this.state.dataCategory.data}</Text>
                     </View>
                     </View>
                     <View style={{marginRight:15}}>
@@ -151,35 +148,27 @@ class FoodReportFilterResult extends React.Component {
             showsVerticalScrollIndicator={false}
         >
         {
-            (this.state.loading)?
-            <View style={{flex:1,justifyContent:'center',alignItems:'center',height:height}}>
-                <ActivityIndicator size="large" color={constants.color.purple} />
-            </View>:
+                (this.state.loading)?
+                <View style={{flex:1,justifyContent:'center',alignItems:'center',height:height}}>
+                  <ActivityIndicator size="large" color={constants.color.purple} />
+                </View>:
             <View>
                 <ImageBackground style={styles.imageBackground} source={srcBg}>
                     <View style={{alignItems:'center',justifyContent:'center',marginTop:20}}>
                         <ImageBackground source={srcBorder} style={{width:166,height:162}}>
                             <View style={{width:166,height:162,borderRadius:80,alignItems:'center',justifyContent:'center'}}>
-                                <Image source={srcFoodExample} style={{width:143,height:142}} />
+                                <Image source={{uri:this.state.dataActivityDetail.foto}} style={{width:143,height:142,borderRadius:71}} />
                             </View>
                         </ImageBackground>
                     </View>
                     <View
                     style={{marginTop:20,justifyContent:'center',alignItems:'center',flexDirection:'row'}}
                     >
-                        <Text>From : </Text>
+                        <Text>Date : </Text>
                         <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate('FoodReportFilterDate')}
                         >
-                            <Text style={{color:'#B08485'}}>{this._retDayName()}, {(this.state.date1.getDate()>9)?this.state.date1.getDate():"0"+this.state.date1.getDate()}  {this._retMonthName(this.state.date1.getMonth())} {this.state.date1.getFullYear()}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View
-                    style={{marginTop:10,justifyContent:'center',alignItems:'center',flexDirection:'row'}}
-                    >
-                        <Text>To : </Text>
-                        <TouchableOpacity
-                        >
-                            <Text style={{color:'#B08485'}}>{this._retDayName()}, {(this.state.date2.getDate()>9)?this.state.date2.getDate():"0"+this.state.date2.getDate()}  {this._retMonthName(this.state.date2.getMonth())} {this.state.date2.getFullYear()}</Text>
+                            <Text style={{color:'#B08485'}}>{this._retDayName()}, {(this.state.date.getDate()>9)?this.state.date.getDate():"0"+this.state.date.getDate()}  {this._retMonthName(this.state.date.getMonth())} {this.state.date.getFullYear()}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{marginTop:20,marginLeft:25}}>
@@ -188,7 +177,7 @@ class FoodReportFilterResult extends React.Component {
                             data={this.state.activity}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => item.id+""}
-                        />    
+                        />
                     </View>
 
                     {/* <View style={{justifyContent:'center',alignItems:'center',marginTop:15}}>
@@ -212,10 +201,15 @@ class FoodReportFilterResult extends React.Component {
                         </View>
                         <Text style={{fontSize:15,color:'#3D4356',marginTop:5,marginLeft:5,marginBottom:5,padding:10,justifyContent:'center'}}>{this.state.dataActivityDetail.tips}</Text>
                     </View>
-
+                    
                     <View style={{height:80}}></View>
                 </ImageBackground>
-                
+                <DateTimePicker
+                    date={new Date()}
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this._handleDatePicked}
+                    onCancel={this._hideDateTimePicker}
+                />
                 
             </View>
         }
@@ -241,4 +235,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FoodReportFilterResult;
+export default StudentReport;

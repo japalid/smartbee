@@ -55,25 +55,13 @@ class Settings extends React.Component {
     .then(async (res) => {
         if(res!==null) {
             let logout = await request.logout(res);
-            if(logout.status==200) {
-                AsyncStorage.removeItem('auth-key');
-                AsyncStorage.removeItem("user-id");
-                AsyncStorage.removeItem("user-name");
-                AsyncStorage.removeItem("user-foto");
-                AsyncStorage.removeItem("user-jk");
-                this._loadingIndicator._hide();
-                this.props.navigation.navigate("SignIn");
-            }else {
-                this._loadingIndicator._hide();
-                Alert.alert(
-                    'Ops..',
-                    'logout failed.',
-                    [
-                        {text: 'OK', onPress: () => {this._loadingIndicator._hide()}},
-                    ],
-                    { cancelable: false }
-                )
-            }
+            AsyncStorage.removeItem('auth-key');
+            AsyncStorage.removeItem("user-id");
+            AsyncStorage.removeItem("user-name");
+            AsyncStorage.removeItem("user-foto");
+            AsyncStorage.removeItem("user-jk");
+            this._loadingIndicator._hide();
+            this.props.navigation.navigate("SignIn");
         }
     })
     .catch(err => this._loadingIndicator._hide())

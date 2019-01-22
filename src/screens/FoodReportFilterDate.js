@@ -20,6 +20,8 @@ class FoodReportFilterDate extends React.Component {
         popupMenu: false,
         isDateTimePickerVisibleFrom: false,
         isDateTimePickerVisibleTo: false,
+        date: new Date(),
+        date2: new Date()
     }
   }
 
@@ -33,6 +35,7 @@ class FoodReportFilterDate extends React.Component {
  
   _handleDatePickedFrom = (date) => {
     this._hideDateTimePickerFrom();
+    this.setState({date:date})
   };
  
   _showDateTimePickerTo = () => this.setState({ isDateTimePickerVisibleTo: true });
@@ -41,8 +44,27 @@ class FoodReportFilterDate extends React.Component {
  
   _handleDatePickedTo = (date) => {
     this._hideDateTimePickerTo();
+    this.setState({date2:date})
   };
  
+
+  _retDayName() {
+    var day = this.state.date.getDay();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[day];
+  }
+
+  _retDayName2() {
+    var day = this.state.date2.getDay();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[day];
+  }
+
+  _retMonthName(month) {
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dev'];
+      return months[month];
+  }
+
   
   openPopupMenu(visible) {
     this.setState({popupMenu: visible});
@@ -84,7 +106,7 @@ class FoodReportFilterDate extends React.Component {
                     >
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Image source={srcAppointment} style={{width:30,height:30,marginRight:10}} />
-                            <Text>Monday, 01 Jan 2018</Text>
+                            <Text>{this._retDayName()}, {(this.state.date.getDate()>9)?this.state.date.getDate():"0"+this.state.date.getDate()}  {this._retMonthName(this.state.date.getMonth())} {this.state.date.getFullYear()}</Text>
                         </View>
                     </TouchableOpacity>
                     <Text style={styles.textLabel}>To</Text>
@@ -94,13 +116,13 @@ class FoodReportFilterDate extends React.Component {
                     >
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Image source={srcAppointment} style={{width:30,height:30,marginRight:10}} />
-                            <Text>Monday, 08 Jan 2018</Text>
+                            <Text>{this._retDayName2()}, {(this.state.date2.getDate()>9)?this.state.date2.getDate():"0"+this.state.date2.getDate()}  {this._retMonthName(this.state.date2.getMonth())} {this.state.date2.getFullYear()}</Text>
                         </View>
                     </TouchableOpacity>
                     
                 </View>
 
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("FoodReportFilterResult")} style={{justifyContent: 'flex-end',backgroundColor:'#0576DC',height:30,alignItems:'center'}} >
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("FoodReportFilterResult",{date_from:this.state.date,date_to:this.state.date2,id:this.props.navigation.getParam("id"),report:this.props.navigation.getParam("report")})} style={{justifyContent: 'flex-end',backgroundColor:'#0576DC',height:30,alignItems:'center'}} >
                     <Text style={{color:'#FFFFFF',fontSize:16,fontWeight:'bold',alignItems:'center',justifyContent:'center'}}>NEXT</Text>
                 </TouchableOpacity>
 

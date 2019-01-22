@@ -249,6 +249,148 @@ export async function activity_daily(token, siswa, date, language){
   	});
 };
 
+export async function activity_category(token){  
+
+	return fetch(constants.baseurl+'activity/categories', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_category_id(token,id){  
+
+	return fetch(constants.baseurl+'activity/categories/'+id, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_food_list(token){  
+
+	return fetch(constants.baseurl+'activity/food', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_subject_list(token){  
+
+	return fetch(constants.baseurl+'activity/subject', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        }
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_report(token, siswa, id, date, language){  
+
+	return fetch(constants.baseurl+'activity/report', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        },
+        body: urlEncoded({          	
+            siswa: siswa,
+            id_activity: id,
+            date: date,
+            language: language
+        })
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_report_range(token, siswa, id, date1, date2, language){  
+
+	return fetch(constants.baseurl+'activity/report/range', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        },
+        body: urlEncoded({          	
+            id: siswa,
+            id_activity: id,
+            start: date1,
+            end: date2,
+            language: language
+        })
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
+export async function activity_upload_academic(token, file, siswa, language, id_detail_activity, time_activity, note, id_mapel, nilai_mapel, isDraft){  
+
+	return fetch(constants.baseurl+'activity/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+token
+        },
+        body: urlEncoded({          	
+            siswa: siswa,
+            language: language,
+            id_detail_activity: id_detail_activity,
+            time_activity: time_activity,
+            note: note,
+            id_mapel: id_mapel,
+            nilai_mapel: nilai_mapel,
+            isDraft: isDraft
+        })
+    })
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+    	throw error;
+  	});
+};
+
 /*-- Lesson --*/
 export async function lesson_category(token){  
 	return fetch(constants.baseurl+'lesson/categories', {
@@ -324,6 +466,10 @@ export async function lesson_list(token, id, page, idclass, language){
     	throw error;
   	});
 };
+
+
+/* INPUT */
+
 
 export async function userDetail (token){
     return fetch(constants.baseurl+'user', {

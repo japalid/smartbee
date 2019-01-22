@@ -73,6 +73,8 @@ import Academic from "./screens/PageAcademic/Academic";
 import Food from "./screens/PageFood/Food";
 import Other from "./screens/PageOther/Other";
 import Activity from "./screens/PageActivity/Activity";
+import StudentReport from "./screens/StudentReport";
+import StudentGet from "./screens/PageStudent/StudentGet";
 import ImageZoom from "./screens/ImageZoom";
 
 const headerStyle = {
@@ -163,6 +165,12 @@ export const SignedIn = createStackNavigator(
       screen: ActivityReport,
       navigationOptions: {
         title: "Activity"
+      }
+    },
+    StudentGet: {
+      screen: StudentGet,
+      navigationOptions: {
+        title: "Students"
       }
     },
     ActivityReportFilterDate: {
@@ -493,6 +501,12 @@ export const SignedIn = createStackNavigator(
       screen: Activity,
       navigationOptions: {
         title: "Activity"
+      }
+    },
+    StudentReport: {
+      screen: StudentReport,
+      navigationOptions: {
+        title: "Report"
       }
     },
     ImageZoom: {
